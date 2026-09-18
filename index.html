@@ -378,6 +378,47 @@ Gunakan struktur JSON berikut:
             }
         }
 
+        function escapeHtml(text) {
+            return String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function formatOptionLatex(optionText) {
+            let text = escapeHtml(optionText);
+
+            // Jika AI sudah memberikan delimiter LaTeX, biarkan MathJax memprosesnya.
+            if (!/[\\$]/.test(text) && /\\(?:frac|dfrac|tfrac|times|div|cdot|sqrt|left|right|text|mathrm|mathbf|begin|over)/.test(text)) {
+                const match = text.match(/^([A-D])\\.\\s*(.*)$/s);
+                if (match) {
+                    text = `${match[1]}. \\(${match[2]}\\)`;
+                }
+            }
+
+            // Dukungan tambahan jika AI mengirim bentuk LaTeX tanpa delimiter,
+            // tetapi hanya berupa ekspresi matematika setelah A./B./C./D.
+            const plain = text.match(/^([A-D])\\.\\s*(.+)$/s);
+            if (plain && !/[\\$]|\\\\\(|\\\\\[/.test(text)) {
+                const body = plain[2];
+                if (/\\\\[a-zA-Z]+|[{}^_]/.test(body)) {
+                    text = `${plain[1]}. \\(${body}\\)`;
+                }
+            }
+
+            return text;
+        }
+
+        function renderMath() {
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.getElementById('q-options')]).catch(err => {
+                    console.error('MathJax gagal merender pilihan:', err);
+                });
+            }
+        }
+
         function renderQuestionUI() {
             isAnswering = true;
             document.getElementById('q-result-area').classList.add('hidden');
@@ -391,12 +432,15 @@ Gunakan struktur JSON berikut:
                 const optionLetter = optionText.substring(0, 1); 
                 const btn = document.createElement('button');
                 btn.className = `option-btn btn-bouncy w-full text-left p-5 text-xl font-bold rounded-2xl border-4 border-gray-200 bg-white text-gray-700 shadow-sm hover:border-blue-400 hover:bg-blue-50 focus:outline-none transition-colors duration-200`;
-                btn.innerText = optionText;
+                // Render pilihan yang mengandung LaTeX dengan MathJax.
+                // innerText membuat kode seperti \frac{1}{2} tampil mentah.
+                btn.innerHTML = formatOptionLatex(optionText);
                 btn.onclick = () => handleAnswerSelect(btn, optionLetter);
                 optionsContainer.appendChild(btn);
             });
 
             showQuestionScreen();
+            renderMath();
         }
 
         function handleAnswerSelect(clickedButton, selectedLetter) {
