@@ -237,62 +237,21 @@
                     return;
                 }
 
-               const prompt = `Anda adalah guru matematika SD kelas 4. Buat 1 soal cerita tentang topik: "${currentTopic.title}".
-
-TUJUAN UTAMA:
-Latih murid merumuskan soal cerita ke dalam bentuk kalimat matematika yang tepat, kemudian menentukan hasil perhitungannya.
-
-ATURAN PEMBUATAN SOAL:
-1. Soal harus sesuai dengan kemampuan murid kelas 4 SD dan menggunakan konteks kehidupan sehari-hari.
-2. Buat soal yang membutuhkan murid memahami informasi dalam cerita sebelum memilih kalimat matematika.
-3. Buat 4 pilihan jawaban (A, B, C, dan D).
-4. Setiap pilihan WAJIB berupa kalimat matematika lengkap DAN memiliki hasil akhir setelah tanda "=".
-5. Hasil akhir setiap pilihan harus benar secara matematis sesuai dengan kalimat matematikanya.
-6. Hanya SATU pilihan yang boleh menjadi kalimat matematika yang paling tepat untuk soal cerita.
-7. Pilihan yang salah harus tetap masuk akal dan berfungsi sebagai pengecoh.
-8. Jangan membuat pilihan yang memiliki nilai hasil yang sama jika susunan matematikanya berbeda.
-9. Jika menggunakan operasi campuran, gunakan tanda kurung "( )" untuk menunjukkan bagian yang harus dikerjakan terlebih dahulu.
-10. Pastikan tanda kurung digunakan secara logis dan membantu murid memahami urutan pengerjaan.
-11. Jangan membuat pilihan dengan hasil yang belum dihitung, seperti "...", "?", atau "hasilnya".
-12. Periksa kembali semua perhitungan sebelum memberikan respons.
-13. Gunakan angka yang sesuai dengan tingkat kelas 4 SD.
-14. Jangan memberikan lebih dari satu jawaban benar.
-
-CONTOH:
-Jika soal menceritakan:
-"Pak Budi membeli 3 kotak pensil. Setiap kotak berisi 4 pensil. Kemudian 2 pensil diberikan kepada adiknya."
-
-Maka pilihan dapat berupa:
-A. (3 × 4) - 2 = 10
-B. 3 × (4 - 2) = 6
-C. (3 + 4) - 2 = 5
-D. (3 × 4) + 2 = 14
-
-Pada contoh tersebut, A adalah jawaban yang tepat karena jumlah pensil dihitung terlebih dahulu, kemudian dikurangi 2 pensil yang diberikan kepada adiknya.
-
-PENTING:
-- Fokus utama adalah memilih KALIMAT MATEMATIKA yang sesuai dengan cerita.
-- Hasil setelah tanda "=" harus selalu dicantumkan.
-- Jika ada bagian operasi yang harus dilakukan terlebih dahulu, gunakan tanda kurung.
-- Jangan memberikan penjelasan di dalam pilihan jawaban.
-- Pembahasan diberikan hanya pada bagian "pembahasan".
-- Gunakan simbol matematika yang jelas seperti +, -, ×, ÷, dan ( ).
-- Gunakan tanda pengurangan "-" atau "−" secara konsisten.
-- Jangan menggunakan format Markdown.
-- Respons harus berupa JSON valid dan tidak boleh ada teks apa pun di luar JSON.
-
-Keluarkan respons HANYA dalam format JSON dengan struktur persis seperti ini:
-{
-  "soal_cerita": "Teks soal cerita yang menarik dan sesuai untuk murid kelas 4.",
-  "pilihan_kalimat_matematika": [
-    "A. (kalimat matematika) = hasil",
-    "B. (kalimat matematika) = hasil",
-    "C. (kalimat matematika) = hasil",
-    "D. (kalimat matematika) = hasil"
-  ],
-  "jawaban_benar": "A",
-  "pembahasan": "Jelaskan langkah penyelesaian secara sederhana. Jelaskan kalimat matematika yang benar, bagian yang dikerjakan terlebih dahulu, penggunaan tanda kurung jika ada, serta mengapa pilihan lainnya tidak tepat."
-}`;
+                const prompt = `Anda adalah guru matematika SD kelas 4. Buat 1 soal cerita tentang topik: "${currentTopic.title}".
+                TUJUAN UTAMA: Latih anak merumuskan soal cerita ke dalam bentuk kalimat matematika, BUKAN menghitung hasil akhir.
+                
+                Keluarkan respons HANYA dalam format JSON dengan struktur persis seperti ini:
+                {
+                  "soal_cerita": "Teks soal cerita yang menarik.",
+                  "pilihan_kalimat_matematika": [
+                    "A. [kalimat matematika 1]",
+                    "B. [kalimat matematika 2]",
+                    "C. [kalimat matematika 3]",
+                    "D. [kalimat matematika 4]"
+                  ],
+                  "jawaban_benar": "A", 
+                  "pembahasan": "Penjelasan mengapa benar dan mengapa pilihan lain salah."
+                }`;
 
                 // Perbaikan Endpoint Groq lengkap dengan /chat/completions dan model yang valid
               const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
