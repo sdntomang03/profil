@@ -225,76 +225,76 @@
             await fetchAndRenderQuestion();
         }
 
-        async function fetchAndRenderQuestion() {
-            showLoading();
-            
-            try {
-                const apiKey = localStorage.getItem('gemini_api_key'); 
-                
-                if (!apiKey) {
-                    alert("API Key tidak ditemukan. Silakan masukkan kembali.");
-                    resetApiKey();
-                    return;
-                }
-
-                const prompt = `Anda adalah guru matematika SD kelas 4. Buat 1 soal cerita tentang topik: "${currentTopic.title}".
-                TUJUAN UTAMA: Latih anak merumuskan soal cerita ke dalam bentuk kalimat matematika, BUKAN menghitung hasil akhir.
-                
-                Keluarkan respons HANYA dalam format JSON dengan struktur persis seperti ini, tanpa teks tambahan apapun:
-                {
-                  "soal_cerita": "Teks soal cerita yang menarik.",
-                  "pilihan_kalimat_matematika": [
-                    "A. [kalimat matematika 1]",
-                    "B. [kalimat matematika 2]",
-                    "C. [kalimat matematika 3]",
-                    "D. [kalimat matematika 4]"
-                  ],
-                  "jawaban_benar": "A", 
-                  "pembahasan": "Penjelasan mengapa benar dan mengapa pilihan lain salah."
-                }`;
-
-                const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                    method: 'POST',
-                    headers: { 
-                        'Authorization': `Bearer ${apiKey}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        model: "meta-llama/llama-3.1-8b-instruct:free",
-                        messages: [{ role: "user", content: prompt }]
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                let textResult = data.choices[0].message.content;
-
-                // Menggunakan regex untuk menangkap blok JSON murni, mengabaikan teks basa-basi AI
-                const jsonMatch = textResult.match(/\{[\s\S]*\}/);
-                if (jsonMatch) {
-                    textResult = jsonMatch[0];
-                } else {
-                    textResult = textResult.replace(/```json/gi, '').replace(/```/g, '').trim();
-                }
-                
-                const parsedData = JSON.parse(textResult);
-                
-                if (!parsedData.soal_cerita || !parsedData.pilihan_kalimat_matematika || !parsedData.jawaban_benar) {
-                    throw new Error("Format JSON tidak lengkap.");
-                }
-
-                currentQuestionData = parsedData;
-                renderQuestionUI();
-
-            } catch (error) {
-                console.error("Gagal mengambil soal:", error);
-                alert("Maaf, terjadi kesalahan saat memproses jawaban AI. Pastikan kunci OpenRouter valid.");
-                showTopics();
-            }
+       async function fetchAndRenderQuestion() {
+    showLoading();
+    
+    try {
+        const apiKey = localStorage.getItem('gemini_api_key'); // Anda bisa mengganti nama key di localStorage nanti jika mau
+        
+        if (!apiKey) {
+            alert("API Key tidak ditemukan. Silakan masukkan kembali.");
+            resetApiKey();
+            return;
         }
+
+        const prompt = `Anda adalah guru matematika SD kelas 4. Buat 1 soal cerita tentang topik: "${currentTopic.title}".
+        TUJUAN UTAMA: Latih anak merumuskan soal cerita ke dalam bentuk kalimat matematika, BUKAN menghitung hasil akhir.
+        
+        Keluarkan respons HANYA dalam format JSON dengan struktur persis seperti ini:
+        {
+          "soal_cerita": "Teks soal cerita yang menarik.",
+          "pilihan_kalimat_matematika": [
+            "A. [kalimat matematika 1]",
+            "B. [kalimat matematika 2]",
+            "C. [kalimat matematika 3]",
+            "D. [kalimat matematika 4]"
+          ],
+          "jawaban_benar": "A", 
+          "pembahasan": "Penjelasan mengapa benar dan mengapa pilihan lain salah."
+        }`;
+
+        // Endpoint resmi DeepSeek
+        const response = await fetch("https://api.deepseek.com/chat/completions", {
+            method: 'POST',
+            headers: { 
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "deepseek-chat",
+                // DeepSeek mendukung instruksi sistem terpisah
+                messages: [
+                    { role: "system", "content": "Keluarkan output HANYA dalam format JSON." },
+                    { role: "user", "content": prompt }
+                ],
+                // Fitur ajaib DeepSeek untuk menjamin output JSON
+                response_format: { type: "json_object" }
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const textResult = data.choices[0].message.content;
+
+        // Karena sudah pakai JSON Mode, kita bisa langsung parse tanpa regex
+        const parsedData = JSON.parse(textResult);
+        
+        if (!parsedData.soal_cerita || !parsedData.pilihan_kalimat_matematika || !parsedData.jawaban_benar) {
+            throw new Error("Format JSON tidak lengkap.");
+        }
+
+        currentQuestionData = parsedData;
+        renderQuestionUI();
+
+    } catch (error) {
+        console.error("Gagal mengambil soal:", error);
+        alert("Maaf, terjadi kesalahan saat memproses jawaban AI. Pastikan kunci DeepSeek valid.");
+        showTopics();
+    }
+}
 
         function renderQuestionUI() {
             isAnswering = true;
