@@ -261,7 +261,7 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "llama-3.1-8b-instant", // Model Llama 3.1 gratis yang sangat cepat
+                model: "openai/gpt-oss-20b", // Model Llama 3.1 gratis yang sangat cepat
                 messages: [
                     { role: "system", content: "Keluarkan output HANYA dalam format JSON murni." },
                     { role: "user", content: prompt }
