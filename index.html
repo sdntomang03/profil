@@ -53,7 +53,7 @@
                 Simpan & Mulai 🚀
             </button>
             
-            <p class="mt-6 text-xs text-gray-400">Kunci disimpan dengan aman di perangkatmu sendiri.</p>
+            <p class="mt-6 text-xs text-gray-400">Kunci disimpan di browser perangkat ini. Jangan gunakan API key produksi pada aplikasi publik.</p>
         </div>
 
         <!-- Screen 1: Topic Selection -->
@@ -144,7 +144,7 @@
         };
 
         function checkApiKey() {
-            const savedKey = localStorage.getItem('gemini_api_key');
+            const savedKey = localStorage.getItem('groq_api_key');
             if (savedKey) {
                 renderTopics();
                 showTopics();
@@ -159,12 +159,12 @@
                 alert("API Key tidak boleh kosong!");
                 return;
             }
-            localStorage.setItem('gemini_api_key', inputKey);
+            localStorage.setItem('groq_api_key', inputKey);
             checkApiKey();
         }
 
         function resetApiKey() {
-            localStorage.removeItem('gemini_api_key');
+            localStorage.removeItem('groq_api_key');
             document.getElementById('api-key-input').value = '';
             checkApiKey();
         }
@@ -229,7 +229,7 @@
             showLoading();
             
             try {
-                const apiKey = localStorage.getItem('gemini_api_key'); 
+                const apiKey = localStorage.getItem('groq_api_key'); 
                 
                 if (!apiKey) {
                     alert("API Key tidak ditemukan. Silakan masukkan kembali.");
@@ -255,27 +255,45 @@
 
                 // Perbaikan Endpoint Groq lengkap dengan /chat/completions dan model yang valid
               const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-            method: 'POST',
-            headers: { 
-                'Authorization': `Bearer ${apiKey}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: "llama-3.3-70b-versatile", // Menggunakan model stabil Groq terbaru
-                messages: [
-                    { role: "system", content: "Keluarkan output HANYA dalam format JSON murni." },
-                    { role: "user", content: prompt }
-                ],
-                response_format: { type: "json_object" } 
-            })
-        });
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${apiKey}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "openai/gpt-oss-120b",
+                        messages: [
+                            {
+                                role: "system",
+                                content: "Anda adalah guru matematika SD kelas 4. Jawab HANYA dengan JSON valid tanpa markdown, tanpa ```json, dan tanpa teks tambahan."
+                            },
+                            {
+                                role: "user",
+                                content: prompt
+                            }
+                        ],
+                        response_format: {
+                            type: "json_object"
+                        },
+                        temperature: 0.7,
+                        max_tokens: 1000
+                    })
+                });
+
+                const responseData = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const message =
+                        responseData?.error?.message ||
+                        `HTTP error! status: ${response.status}`;
+                    throw new Error(message);
                 }
 
-                const data = await response.json();
-                const textResult = data.choices[0].message.content;
+                const textResult = responseData?.choices?.[0]?.message?.content;
+
+                if (!textResult) {
+                    throw new Error("Groq tidak mengembalikan isi jawaban.");
+                }
 
                 const parsedData = JSON.parse(textResult);
                 
@@ -288,7 +306,11 @@
 
             } catch (error) {
                 console.error("Gagal mengambil soal:", error);
-                alert("Maaf, terjadi kesalahan. Pastikan kunci Groq (gsk_...) Anda sudah dimasukkan dengan benar.");
+                alert(
+                    "Gagal membuat soal.\n\n" +
+                    (error?.message || "Kesalahan tidak diketahui.") +
+                    "\n\nPeriksa API key Groq dan koneksi internet."
+                );
                 showTopics();
             }
         }
