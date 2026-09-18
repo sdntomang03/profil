@@ -11,7 +11,6 @@
     <style>
         body {
             font-family: 'Quicksand', sans-serif;
-            /* Background ceria seperti langit dan padang rumput */
             background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 50%, #bbf7d0 100%);
             min-height: 100vh;
         }
@@ -40,16 +39,36 @@
 <body class="text-gray-800 p-4 md:p-8 flex items-center justify-center">
 
     <!-- Main App Container -->
-    <div class="max-w-3xl w-full bg-white/90 backdrop-blur-sm rounded-[2rem] shadow-2xl overflow-hidden border-4 border-white">
+    <div class="max-w-3xl w-full bg-white/90 backdrop-blur-sm rounded-[2rem] shadow-2xl overflow-hidden border-4 border-white relative">
         
+        <!-- Screen 0: API Key Setup -->
+        <div id="screen-setup" class="p-8 md:p-12 text-center hidden">
+            <h1 class="text-4xl md:text-5xl font-bold text-blue-600 mb-4 drop-shadow-sm">Halo Penjelajah! 🧭</h1>
+            <p class="text-lg text-gray-600 mb-8 font-semibold">Sebelum mulai misi, masukkan Kunci Rahasia (API Key) milikmu:</p>
+            
+            <input type="password" id="api-key-input" placeholder="AIzaSy..." 
+                   class="w-full max-w-md mx-auto block px-4 py-3 border-2 border-blue-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-200 mb-6 text-center text-lg shadow-inner">
+            
+            <button onclick="saveApiKey()" class="btn-bouncy w-full max-w-xs mx-auto bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold py-3 px-6 rounded-full shadow-lg border-b-4 border-blue-700">
+                Simpan & Mulai 🚀
+            </button>
+            
+            <p class="mt-6 text-xs text-gray-400">Kunci disimpan dengan aman di perangkatmu sendiri.</p>
+        </div>
+
         <!-- Screen 1: Topic Selection -->
-        <div id="screen-topics" class="p-8 text-center block">
+        <div id="screen-topics" class="p-8 text-center hidden">
             <h1 class="text-4xl md:text-5xl font-bold text-blue-600 mb-2 drop-shadow-sm">Petualangan Matematika! 🚀</h1>
             <p class="text-xl text-gray-600 mb-8 font-semibold">Pilih misi belajarmu hari ini:</p>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="topics-container">
                 <!-- Topics will be generated here by JS -->
             </div>
+
+            <!-- Tombol reset kunci -->
+            <button onclick="resetApiKey()" class="mt-8 text-sm text-red-400 hover:text-red-600 underline font-semibold">
+                Ganti API Key
+            </button>
         </div>
 
         <!-- Screen 2: Loading -->
@@ -131,8 +150,36 @@
 
         // Initialize App
         window.onload = () => {
-            renderTopics();
+            checkApiKey();
         };
+
+        // --- SISTEM API KEY ---
+        function checkApiKey() {
+            const savedKey = localStorage.getItem('gemini_api_key');
+            if (savedKey) {
+                renderTopics();
+                showTopics();
+            } else {
+                showSetupScreen();
+            }
+        }
+
+        function saveApiKey() {
+            const inputKey = document.getElementById('api-key-input').value.trim();
+            if (inputKey === "") {
+                alert("API Key tidak boleh kosong!");
+                return;
+            }
+            localStorage.setItem('gemini_api_key', inputKey);
+            checkApiKey();
+        }
+
+        function resetApiKey() {
+            localStorage.removeItem('gemini_api_key');
+            document.getElementById('api-key-input').value = '';
+            checkApiKey();
+        }
+        // ----------------------
 
         function renderTopics() {
             const container = document.getElementById('topics-container');
@@ -153,11 +200,16 @@
 
         // Navigation Functions
         function hideAllScreens() {
+            document.getElementById('screen-setup').classList.add('hidden');
             document.getElementById('screen-topics').classList.add('hidden');
             document.getElementById('screen-loading').classList.add('hidden');
             document.getElementById('screen-question').classList.add('hidden');
-            // Use flex to keep loading centered when visible
             document.getElementById('screen-loading').classList.remove('flex'); 
+        }
+
+        function showSetupScreen() {
+            hideAllScreens();
+            document.getElementById('screen-setup').classList.remove('hidden');
         }
 
         function showTopics() {
@@ -190,8 +242,17 @@
             showLoading();
             
             try {
-                const apiKey = ""; // API key is handled by the canvas environment
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                // Ambil API Key dari localStorage
+                const apiKey = localStorage.getItem('gemini_api_key');
+                
+                if (!apiKey) {
+                    alert("Sesi API Key habis. Silakan masukkan kembali.");
+                    resetApiKey();
+                    return;
+                }
+
+                // URL disesuaikan ke model gemini-1.5-flash standar yang lebih stabil
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
                 
                 const prompt = `Anda adalah guru matematika SD kelas 4. Buat 1 soal cerita tentang topik: "${currentTopic.title}".
                 TUJUAN UTAMA: Latih anak merumuskan soal cerita ke dalam bentuk kalimat matematika, BUKAN menghitung hasil akhir.
@@ -216,7 +277,6 @@
                     contents: [{ parts: [{ text: prompt }] }],
                     generationConfig: {
                         temperature: 0.7,
-                        // Ensure it tries to output JSON if possible
                         responseMimeType: "application/json",
                     }
                 };
@@ -228,6 +288,7 @@
                 });
 
                 if (!response.ok) {
+                    if(response.status === 400) throw new Error("API Key mungkin salah atau tidak valid.");
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
@@ -238,12 +299,9 @@
                     throw new Error("Respons AI kosong.");
                 }
 
-                // Clean potential markdown formatting just in case
                 textResult = textResult.replace(/```json/gi, '').replace(/```/g, '').trim();
-                
                 const parsedData = JSON.parse(textResult);
                 
-                // Validation
                 if (!parsedData.soal_cerita || !parsedData.pilihan_kalimat_matematika || !parsedData.jawaban_benar) {
                     throw new Error("Format JSON tidak lengkap.");
                 }
@@ -253,35 +311,32 @@
 
             } catch (error) {
                 console.error("Gagal mengambil soal:", error);
-                alert("Maaf, terjadi kesalahan saat menyiapkan soal. Mari coba lagi!");
-                showTopics();
+                alert("Maaf, gagal memproses AI. " + error.message);
+                
+                // Jika error indikasi kunci salah, kembalikan ke layar setup
+                if (error.message.includes("API Key")) {
+                    resetApiKey();
+                } else {
+                    showTopics();
+                }
             }
         }
 
         function renderQuestionUI() {
             isAnswering = true;
-            
-            // Reset UI States
             document.getElementById('q-result-area').classList.add('hidden');
-            
-            // Set Data
             document.getElementById('q-topic-badge').innerText = `Misi: ${currentTopic.title}`;
             document.getElementById('q-text').innerText = currentQuestionData.soal_cerita;
             
             const optionsContainer = document.getElementById('q-options');
             optionsContainer.innerHTML = '';
 
-            // Generate Option Buttons
             currentQuestionData.pilihan_kalimat_matematika.forEach(optionText => {
-                // Extract letter (A, B, C, D) for value checking
                 const optionLetter = optionText.substring(0, 1); 
-                
                 const btn = document.createElement('button');
-                // Base styles for options
                 btn.className = `option-btn btn-bouncy w-full text-left p-5 text-xl font-bold rounded-2xl border-4 border-gray-200 bg-white text-gray-700 shadow-sm hover:border-blue-400 hover:bg-blue-50 focus:outline-none transition-colors duration-200`;
                 btn.innerText = optionText;
                 btn.onclick = () => handleAnswerSelect(btn, optionLetter);
-                
                 optionsContainer.appendChild(btn);
             });
 
@@ -289,7 +344,7 @@
         }
 
         function handleAnswerSelect(clickedButton, selectedLetter) {
-            if (!isAnswering) return; // Prevent multiple clicks
+            if (!isAnswering) return;
             isAnswering = false;
 
             const correctLetter = currentQuestionData.jawaban_benar.trim().toUpperCase();
@@ -297,7 +352,6 @@
             
             const allOptionButtons = document.querySelectorAll('.option-btn');
             
-            // Disable all buttons and style them based on correctness
             allOptionButtons.forEach(btn => {
                 btn.disabled = true;
                 btn.classList.remove('hover:border-blue-400', 'hover:bg-blue-50', 'btn-bouncy');
@@ -305,27 +359,21 @@
                 const btnLetter = btn.innerText.substring(0, 1);
                 
                 if (btnLetter === correctLetter) {
-                    // Always highlight the correct answer in green
                     btn.classList.replace('border-gray-200', 'border-green-500');
                     btn.classList.replace('bg-white', 'bg-green-100');
                     btn.classList.replace('text-gray-700', 'text-green-800');
-                    // Add a checkmark
                     btn.innerHTML = `<span class="float-right text-green-600">✔️</span>` + btn.innerHTML;
                 } else if (btn === clickedButton && !isCorrect) {
-                    // Highlight the wrong answer chosen in red
                     btn.classList.replace('border-gray-200', 'border-red-500');
                     btn.classList.replace('bg-white', 'bg-red-100');
                     btn.classList.replace('text-gray-700', 'text-red-800');
                     btn.classList.add('shake-animation');
-                    // Add a cross
                     btn.innerHTML = `<span class="float-right text-red-600">❌</span>` + btn.innerHTML;
                 } else {
-                    // Dim the other incorrect options
                     btn.classList.add('opacity-50');
                 }
             });
 
-            // Show Result Area
             const resultMessage = document.getElementById('q-result-message');
             if (isCorrect) {
                 resultMessage.innerText = "🌟 Yey! Pilihanmu Tepat Sekali!";
@@ -338,12 +386,10 @@
             document.getElementById('q-explanation').innerText = currentQuestionData.pembahasan;
             document.getElementById('q-result-area').classList.remove('hidden');
             
-            // Scroll to explanation
             setTimeout(() => {
                 document.getElementById('q-result-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
         }
-
     </script>
 </body>
 </html>
