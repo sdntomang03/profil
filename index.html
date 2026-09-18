@@ -3,1319 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Asnaeni | Guru SD Negeri 007 Nunukan</title>
-    <meta name="description"
-          content="Curriculum Vitae Asnaeni - Guru SD Negeri 007 Nunukan">
-
-    <!-- Tailwind CSS CDN -->
+    <title>Curriculum Vitae - Asnaeni (Guru SD Negeri 007 Nunukan)</title>
+    
+    <!-- Memuat Tailwind CSS melalui CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Font -->
+    
+    <!-- Memuat Google Fonts (Inter & Merriweather) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Memuat FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Konfigurasi Tema Tailwind Kustom -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif']
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        eduPrimary: '#047857', /* Emerald-700 */
+                        eduSecondary: '#10b981', /* Emerald-500 */
+                        eduLight: '#ecfdf5', /* Emerald-50 */
+                        eduDark: '#064e3b', /* Emerald-900 */
                     }
                 }
             }
         }
     </script>
-
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Print */
-        @media print {
-
-            @page {
-                size: A4;
-                margin: 0;
-            }
-
-            body {
-                background: white !important;
-            }
-
-            .no-print {
-                display: none !important;
-            }
-
-            .cv {
-                margin: 0 !important;
-                width: 100% !important;
-                max-width: none !important;
-                box-shadow: none !important;
-                border-radius: 0 !important;
-            }
-
-            .print-break {
-                break-inside: avoid;
-            }
-        }
-    </style>
 </head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased py-8 px-4 sm:px-8">
 
+    <div class="max-w-5xl mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-slate-200">
+        
+        <!-- Bagian Header (Informasi Utama) -->
+        <header class="bg-eduPrimary text-white p-8 md:p-12 relative overflow-hidden">
+            <!-- Elemen Dekoratif -->
+            <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-eduSecondary rounded-full opacity-20 blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-eduDark rounded-full opacity-30 blur-2xl"></div>
 
-<body class="bg-slate-100 text-slate-700">
-
-
-<!-- =========================================================
-     NAVBAR
-========================================================= -->
-
-<nav class="no-print sticky top-0 z-50
-            bg-white/90 backdrop-blur
-            border-b border-slate-200">
-
-    <div class="max-w-5xl mx-auto px-5">
-
-        <div class="h-16 flex items-center justify-between">
-
-            <a href="#home"
-               class="font-bold text-slate-900">
-                ASNAENI
-            </a>
-
-            <div class="hidden md:flex items-center gap-6 text-sm">
-
-                <a href="#profil"
-                   class="hover:text-blue-600 transition">
-                    Profil
-                </a>
-
-                <a href="#pengalaman"
-                   class="hover:text-blue-600 transition">
-                    Pengalaman
-                </a>
-
-                <a href="#pendidikan"
-                   class="hover:text-blue-600 transition">
-                    Pendidikan
-                </a>
-
-                <a href="#kompetensi"
-                   class="hover:text-blue-600 transition">
-                    Kompetensi
-                </a>
-
-                <button
-                    onclick="window.print()"
-                    class="px-4 py-2 bg-blue-600
-                           text-white rounded-lg
-                           hover:bg-blue-700 transition">
-                    Cetak CV
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</nav>
-
-
-
-<!-- =========================================================
-     CV CONTAINER
-========================================================= -->
-
-<main id="home"
-      class="cv max-w-5xl mx-auto my-8
-             bg-white shadow-xl
-             rounded-2xl overflow-hidden">
-
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
-<header class="relative overflow-hidden
-               bg-slate-900 text-white">
-
-    <!-- Background decoration -->
-
-    <div class="absolute -right-20 -top-20
-                w-72 h-72
-                bg-blue-600/20
-                rounded-full">
-    </div>
-
-    <div class="absolute -left-20 -bottom-32
-                w-80 h-80
-                bg-cyan-500/10
-                rounded-full">
-    </div>
-
-
-    <div class="relative p-8 md:p-12">
-
-        <div class="flex flex-col
-                    md:flex-row
-                    items-center
-                    md:items-start
-                    gap-8">
-
-
-            <!-- FOTO -->
-
-            <div class="shrink-0">
-
-                <div class="w-36 h-36 md:w-40 md:h-40
-                            rounded-2xl overflow-hidden
-                            border-4 border-white/20
-                            shadow-xl bg-slate-700">
-
-                    <!--
-                        Simpan foto dengan nama:
-                        foto-asnaeni.jpg
-                    -->
-
-                    <img
-                        src="foto-asnaeni.jpg"
-                        alt="Foto Asnaeni"
-                        class="w-full h-full object-cover"
-                        onerror="
-                            this.style.display='none';
-                            this.parentElement.innerHTML =
-                            '<div class=\'w-full h-full flex items-center justify-center text-5xl\'>👩‍🏫</div>';
-                        "
-                    >
-
+            <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-8">
+                <!-- Foto Profil Pendidik -->
+                <div class="shrink-0">
+                    <img src="https://placehold.co/400x400/10b981/ffffff?text=A" alt="Foto Profil Asnaeni" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white object-cover shadow-md">
                 </div>
-
-            </div>
-
-
-            <!-- IDENTITAS -->
-
-            <div class="flex-1 text-center
-                        md:text-left">
-
-                <p class="text-blue-400
-                          uppercase
-                          tracking-[0.25em]
-                          text-xs md:text-sm
-                          font-bold mb-3">
-
-                    Curriculum Vitae
-
-                </p>
-
-
-                <h1 class="text-4xl md:text-5xl
-                           font-extrabold
-                           tracking-tight">
-
-                    Asnaeni
-
-                </h1>
-
-
-                <p class="text-xl
-                          md:text-2xl
-                          text-slate-300
-                          mt-3">
-
-                    Guru Sekolah Dasar
-
-                </p>
-
-
-                <div class="mt-6
-                            flex flex-wrap
-                            justify-center
-                            md:justify-start
-                            gap-3">
-
-
-                    <span class="px-4 py-2
-                                 rounded-full
-                                 bg-white/10
-                                 border border-white/10
-                                 text-sm">
-
-                        👩‍🏫 Pendidik
-
-                    </span>
-
-
-                    <span class="px-4 py-2
-                                 rounded-full
-                                 bg-white/10
-                                 border border-white/10
-                                 text-sm">
-
-                        🏫 SD Negeri 007 Nunukan
-
-                    </span>
-
-
+                
+                <!-- Detail Nama dan Jabatan -->
+                <div class="flex-grow text-center md:text-left">
+                    <h1 class="text-3xl md:text-5xl font-bold tracking-tight font-serif">Asnaeni, S.Pd.</h1>
+                    <h2 class="text-xl md:text-2xl text-emerald-200 font-medium mt-2">Guru Pendidik - SD NEGERI 007 NUNUKAN</h2>
+                    
+                    <!-- Informasi Kontak -->
+                    <div class="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-3 text-sm md:text-base text-emerald-50 mt-5">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-envelope text-emerald-300"></i>
+                            <a href="mailto:asnaeni.guru@example.com" class="hover:text-white transition">asnaeni.guru@example.com</a>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-phone text-emerald-300"></i>
+                            <a href="tel:+6281234567890" class="hover:text-white transition">+62 812-3456-7890</a>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-emerald-300"></i>
+                            <span>Nunukan, Kalimantan Utara</span>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
-        </div>
-
-    </div>
-
-</header>
-
-
-
-<!-- =========================================================
-     SCHOOL INFORMATION
-========================================================= -->
-
-<div class="bg-blue-600
-            text-white
-            px-8 md:px-12 py-5">
-
-    <div class="flex flex-col
-                md:flex-row
-                md:items-center
-                md:justify-between
-                gap-3">
-
-        <div>
-
-            <p class="text-xs
-                      uppercase
-                      tracking-wider
-                      text-blue-200">
-
-                Instansi
-
-            </p>
-
-            <p class="font-bold
-                      text-lg">
-
-                SD NEGERI 007 NUNUKAN
-
-            </p>
-
-        </div>
-
-
-        <div class="text-sm
-                    text-blue-100">
-
-            Nunukan, Kalimantan Utara
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =========================================================
-     CONTENT
-========================================================= -->
-
-<div class="grid grid-cols-1 md:grid-cols-3">
-
-
-<!-- =========================================================
-     SIDEBAR
-========================================================= -->
-
-<aside class="bg-slate-50
-              border-r border-slate-200
-              p-8">
-
-
-<!-- DATA PRIBADI -->
-
-<section class="mb-9">
-
-    <h2 class="text-sm
-               font-bold
-               uppercase
-               tracking-wider
-               text-slate-900
-               mb-5">
-
-        Data Pribadi
-
-    </h2>
-
-
-    <div class="space-y-5">
-
-
-        <div>
-
-            <p class="text-xs
-                      text-slate-400
-                      mb-1">
-
-                Nama Lengkap
-
-            </p>
-
-            <p class="font-semibold
-                      text-slate-800">
-
-                Asnaeni
-
-            </p>
-
-        </div>
-
-
-        <div>
-
-            <p class="text-xs
-                      text-slate-400
-                      mb-1">
-
-                NIP
-
-            </p>
-
-            <p class="font-semibold
-                      text-slate-800">
-
-                ............................
-
-            </p>
-
-        </div>
-
-
-        <div>
-
-            <p class="text-xs
-                      text-slate-400
-                      mb-1">
-
-                Tempat, Tanggal Lahir
-
-            </p>
-
-            <p class="font-semibold
-                      text-slate-800">
-
-                ............................
-
-            </p>
-
-        </div>
-
-
-        <div>
-
-            <p class="text-xs
-                      text-slate-400
-                      mb-1">
-
-                Email
-
-            </p>
-
-            <p class="font-semibold
-                      text-slate-800
-                      break-all">
-
-                email@example.com
-
-            </p>
-
-        </div>
-
-
-        <div>
-
-            <p class="text-xs
-                      text-slate-400
-                      mb-1">
-
-                Nomor HP
-
-            </p>
-
-            <p class="font-semibold
-                      text-slate-800">
-
-                08xx-xxxx-xxxx
-
-            </p>
-
-        </div>
-
-
-        <div>
-
-            <p class="text-xs
-                      text-slate-400
-                      mb-1">
-
-                Alamat
-
-            </p>
-
-            <p class="font-semibold
-                      text-slate-800">
-
-                Nunukan,
-                Kalimantan Utara
-
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- KONTAK -->
-
-<section class="mb-9">
-
-    <h2 class="text-sm
-               font-bold
-               uppercase
-               tracking-wider
-               text-slate-900
-               mb-5">
-
-        Kontak
-
-    </h2>
-
-
-    <div class="space-y-3">
-
-
-        <a href="mailto:email@example.com"
-           class="flex items-center gap-3
-                  text-sm
-                  hover:text-blue-600
-                  transition">
-
-            <span class="w-8 h-8
-                         rounded-lg
-                         bg-blue-100
-                         flex items-center
-                         justify-center">
-
-                ✉️
-
-            </span>
-
-            Email
-
-        </a>
-
-
-        <a href="tel:+6280000000000"
-           class="flex items-center gap-3
-                  text-sm
-                  hover:text-blue-600
-                  transition">
-
-            <span class="w-8 h-8
-                         rounded-lg
-                         bg-blue-100
-                         flex items-center
-                         justify-center">
-
-                📱
-
-            </span>
-
-            Telepon
-
-        </a>
-
-    </div>
-
-</section>
-
-
-
-<!-- KOMPETENSI -->
-
-<section id="kompetensi">
-
-    <h2 class="text-sm
-               font-bold
-               uppercase
-               tracking-wider
-               text-slate-900
-               mb-5">
-
-        Kompetensi
-
-    </h2>
-
-
-    <div class="space-y-4">
-
-
-        <!-- Skill -->
-
-        <div>
-
-            <div class="flex justify-between
-                        text-sm mb-1">
-
-                <span>
-                    Pembelajaran
-                </span>
-
-                <span class="font-semibold">
-                    95%
-                </span>
-
-            </div>
-
-            <div class="h-2
-                        bg-slate-200
-                        rounded-full">
-
-                <div class="h-2
-                            w-[95%]
-                            bg-blue-600
-                            rounded-full">
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div>
-
-            <div class="flex justify-between
-                        text-sm mb-1">
-
-                <span>
-                    Manajemen Kelas
-                </span>
-
-                <span class="font-semibold">
-                    90%
-                </span>
-
-            </div>
-
-            <div class="h-2
-                        bg-slate-200
-                        rounded-full">
-
-                <div class="h-2
-                            w-[90%]
-                            bg-blue-600
-                            rounded-full">
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div>
-
-            <div class="flex justify-between
-                        text-sm mb-1">
-
-                <span>
-                    Teknologi Pendidikan
-                </span>
-
-                <span class="font-semibold">
-                    85%
-                </span>
-
-            </div>
-
-            <div class="h-2
-                        bg-slate-200
-                        rounded-full">
-
-                <div class="h-2
-                            w-[85%]
-                            bg-blue-600
-                            rounded-full">
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div>
-
-            <div class="flex justify-between
-                        text-sm mb-1">
-
-                <span>
-                    Administrasi
-                </span>
-
-                <span class="font-semibold">
-                    90%
-                </span>
-
-            </div>
-
-            <div class="h-2
-                        bg-slate-200
-                        rounded-full">
-
-                <div class="h-2
-                            w-[90%]
-                            bg-blue-600
-                            rounded-full">
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-</aside>
-
-
-
-<!-- =========================================================
-     MAIN
-========================================================= -->
-
-<section class="md:col-span-2
-                p-8 md:p-10">
-
-
-<!-- PROFIL -->
-
-<section id="profil"
-         class="mb-10
-                print-break">
-
-    <div class="flex items-center
-                gap-4 mb-5">
-
-        <div class="w-11 h-11
-                    rounded-xl
-                    bg-blue-100
-                    text-blue-600
-                    flex items-center
-                    justify-center
-                    text-xl">
-
-            👩‍🏫
-
-        </div>
-
-
-        <div>
-
-            <p class="text-xs
-                      uppercase
-                      tracking-wider
-                      text-blue-600
-                      font-bold">
-
-                Tentang Saya
-
-            </p>
-
-            <h2 class="text-2xl
-                       font-bold
-                       text-slate-900">
-
-                Profil Profesional
-
-            </h2>
-
-        </div>
-
-    </div>
-
-
-    <p class="leading-8
-              text-slate-600">
-
-        Saya adalah seorang pendidik yang memiliki komitmen
-        dalam melaksanakan pembelajaran yang berpusat pada
-        murid. Berupaya menciptakan lingkungan belajar yang
-        positif, aman, aktif, dan menyenangkan serta mendorong
-        perkembangan akademik, karakter, kreativitas, dan
-        kemandirian murid.
-
-    </p>
-
-</section>
-
-
-
-<!-- PENGALAMAN -->
-
-<section id="pengalaman"
-         class="mb-10
-                print-break">
-
-    <div class="flex items-center
-                gap-4 mb-7">
-
-        <div class="w-11 h-11
-                    rounded-xl
-                    bg-blue-100
-                    text-blue-600
-                    flex items-center
-                    justify-center
-                    text-xl">
-
-            💼
-
-        </div>
-
-
-        <div>
-
-            <p class="text-xs
-                      uppercase
-                      tracking-wider
-                      text-blue-600
-                      font-bold">
-
-                Karier
-
-            </p>
-
-            <h2 class="text-2xl
-                       font-bold
-                       text-slate-900">
-
-                Pengalaman Kerja
-
-            </h2>
-
-        </div>
-
-    </div>
-
-
-    <!-- Timeline -->
-
-    <div class="relative
-                ml-2
-                border-l-2
-                border-blue-100">
-
-
-        <!-- EXPERIENCE -->
-
-        <div class="relative
-                    pl-8 pb-9">
-
-            <div class="absolute
-                        -left-[9px]
-                        top-1
-                        w-4 h-4
-                        rounded-full
-                        bg-blue-600
-                        border-4
-                        border-white
-                        shadow">
-            </div>
-
-
-            <div class="flex flex-col
-                        md:flex-row
-                        md:justify-between
-                        gap-1">
-
-                <div>
-
-                    <h3 class="text-lg
-                               font-bold
-                               text-slate-900">
-
-                        Guru Sekolah Dasar
-
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-3 gap-10 p-8 md:p-12">
+            
+            <!-- Kolom Utama Kiri -->
+            <div class="md:col-span-2 space-y-10">
+                
+                <!-- Tentang Saya / Profil Pendidik -->
+                <section>
+                    <h3 class="text-2xl font-bold text-slate-800 border-b-2 border-eduSecondary pb-2 mb-4 flex items-center gap-3">
+                        <i class="fas fa-chalkboard-teacher text-eduPrimary"></i> Profil Pendidik
                     </h3>
-
-                    <p class="text-blue-600
-                              font-semibold">
-
-                        SD Negeri 007 Nunukan
-
+                    <p class="text-slate-600 leading-relaxed text-justify">
+                        Seorang tenaga pendidik yang berdedikasi tinggi dengan fokus pada pembentukan karakter dan prestasi akademik siswa sekolah dasar. Berkomitmen penuh untuk menciptakan lingkungan belajar yang aman, inklusif, dan interaktif. Memiliki pemahaman yang kuat dalam penerapan metode pembelajaran modern serta selalu berupaya menjadi fasilitator yang baik untuk mendukung potensi maksimal setiap peserta didik di SD Negeri 007 Nunukan.
                     </p>
+                </section>
 
-                </div>
-
-
-                <span class="text-sm
-                             text-slate-400">
-
-                    Tahun – Sekarang
-
-                </span>
-
-            </div>
-
-
-            <ul class="mt-4
-                       space-y-2
-                       text-sm
-                       leading-6
-                       text-slate-600">
-
-                <li>
-                    • Melaksanakan proses pembelajaran
-                    sesuai kurikulum yang berlaku.
-                </li>
-
-                <li>
-                    • Menyusun perencanaan dan perangkat
-                    pembelajaran.
-                </li>
-
-                <li>
-                    • Melaksanakan asesmen dan evaluasi
-                    hasil belajar murid.
-                </li>
-
-                <li>
-                    • Menciptakan lingkungan pembelajaran
-                    yang aktif dan menyenangkan.
-                </li>
-
-                <li>
-                    • Berkolaborasi dengan orang tua,
-                    rekan guru, dan pihak sekolah.
-                </li>
-
-            </ul>
-
-        </div>
-
-
-        <!-- EXPERIENCE -->
-
-        <div class="relative
-                    pl-8">
-
-            <div class="absolute
-                        -left-[9px]
-                        top-1
-                        w-4 h-4
-                        rounded-full
-                        bg-blue-600
-                        border-4
-                        border-white
-                        shadow">
-            </div>
-
-
-            <h3 class="text-lg
-                       font-bold
-                       text-slate-900">
-
-                Pengembangan Pembelajaran
-
-            </h3>
-
-
-            <p class="text-blue-600
-                      font-semibold
-                      mt-1">
-
-                Media dan Inovasi Pendidikan
-
-            </p>
-
-
-            <p class="mt-3
-                      text-sm
-                      leading-6
-                      text-slate-600">
-
-                Mengembangkan strategi, media, dan aktivitas
-                pembelajaran yang dapat meningkatkan
-                keterlibatan murid dalam proses belajar.
-
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- PENDIDIKAN -->
-
-<section id="pendidikan"
-         class="mb-10
-                print-break">
-
-    <div class="flex items-center
-                gap-4 mb-6">
-
-        <div class="w-11 h-11
-                    rounded-xl
-                    bg-blue-100
-                    text-blue-600
-                    flex items-center
-                    justify-center
-                    text-xl">
-
-            🎓
-
-        </div>
-
-
-        <div>
-
-            <p class="text-xs
-                      uppercase
-                      tracking-wider
-                      text-blue-600
-                      font-bold">
-
-                Akademik
-
-            </p>
-
-            <h2 class="text-2xl
-                       font-bold
-                       text-slate-900">
-
-                Pendidikan
-
-            </h2>
-
-        </div>
-
-    </div>
-
-
-    <div class="space-y-4">
-
-
-        <div class="border
-                    border-slate-200
-                    rounded-xl
-                    p-5">
-
-            <div class="flex flex-col
-                        md:flex-row
-                        md:justify-between
-                        gap-2">
-
-                <div>
-
-                    <h3 class="font-bold
-                               text-slate-900">
-
-                        Sarjana Pendidikan
-
+                <section>
+                    <h3 class="text-2xl font-bold text-slate-800 border-b-2 border-eduSecondary pb-2 mb-6 flex items-center gap-3">
+                        <i class="fas fa-book-reader text-eduPrimary"></i> Pengalaman Mengajar
                     </h3>
+                    
+                    <div class="space-y-8">
+                        <!-- Pengalaman Saat Ini -->
+                        <article class="relative pl-6 border-l-2 border-emerald-200">
+                            <div class="absolute w-4 h-4 bg-eduPrimary rounded-full -left-[9px] top-1 shadow-sm"></div>
+                            <h4 class="text-xl font-bold text-slate-800">Guru Kelas</h4>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-slate-500 mb-3 mt-1">
+                                <span class="font-semibold text-eduPrimary">SD Negeri 007 Nunukan</span>
+                                <span class="hidden sm:inline">•</span>
+                                <span><i class="far fa-calendar-alt mr-1"></i> Juli 2018 - Sekarang</span>
+                            </div>
+                            <ul class="list-none text-slate-600 space-y-2">
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
+                                    <span>Merencanakan dan melaksanakan kegiatan pembelajaran yang menarik sesuai dengan standar Kurikulum Merdeka.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
+                                    <span>Melakukan evaluasi perkembangan akademik dan karakter siswa secara berkala, serta mengomunikasikannya dengan wali murid.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
+                                    <span>Mengelola administrasi kelas dan menyusun perangkat pembelajaran (RPP/Modul Ajar, Silabus, dan bahan ajar).</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
+                                    <span>Aktif berpartisipasi dalam Kelompok Kerja Guru (KKG) tingkat gugus untuk pengembangan keprofesian berkelanjutan.</span>
+                                </li>
+                            </ul>
+                        </article>
 
-                    <p class="text-blue-600
-                              font-medium mt-1">
-
-                        Nama Perguruan Tinggi
-
-                    </p>
-
-                </div>
-
-
-                <span class="text-sm
-                             text-slate-400">
-
-                    Tahun Lulus
-
-                </span>
-
+                        <!-- Pengalaman Sebelumnya -->
+                        <article class="relative pl-6 border-l-2 border-emerald-200">
+                            <div class="absolute w-3 h-3 bg-emerald-300 rounded-full -left-[7px] top-1"></div>
+                            <h4 class="text-xl font-semibold text-slate-800">Guru Honorer</h4>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-slate-500 mb-3 mt-1">
+                                <span class="font-medium text-eduPrimary">SD Negeri (Contoh) Nunukan</span>
+                                <span class="hidden sm:inline">•</span>
+                                <span><i class="far fa-calendar-alt mr-1"></i> Jan 2015 - Jun 2018</span>
+                            </div>
+                            <ul class="list-none text-slate-600 space-y-2">
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
+                                    <span>Membantu guru utama dalam proses belajar mengajar dan pendampingan siswa berkebutuhan khusus di kelas.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
+                                    <span>Mempersiapkan media pembelajaran visual dan alat peraga edukatif untuk meningkatkan minat belajar siswa.</span>
+                                </li>
+                            </ul>
+                        </article>
+                    </div>
+                </section>
             </div>
 
-        </div>
+            <div class="space-y-10">
+                
+                <!-- Riwayat Pendidikan -->
+                <section>
+                    <h3 class="text-2xl font-bold text-slate-800 border-b-2 border-eduSecondary pb-2 mb-6 flex items-center gap-3">
+                        <i class="fas fa-graduation-cap text-eduPrimary"></i> Pendidikan
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <article class="bg-eduLight p-4 rounded-lg border border-emerald-100">
+                            <h4 class="text-lg font-bold text-slate-800">S1 Pendidikan Guru Sekolah Dasar (PGSD)</h4>
+                            <p class="text-eduPrimary font-medium text-sm mt-1">Universitas Borneo Tarakan</p>
+                            <div class="flex items-center gap-2 text-sm text-slate-500 mt-2">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>Lulus Tahun 2014</span>
+                            </div>
+                            <p class="text-slate-600 text-sm mt-3 border-t border-emerald-200 pt-2">Aktif dalam kegiatan himpunan mahasiswa keguruan dan mengikuti berbagai seminar pendidikan dasar.</p>
+                        </article>
+                    </div>
+                </section>
 
+                <!-- Keahlian Pendidik -->
+                <section>
+                    <h3 class="text-2xl font-bold text-slate-800 border-b-2 border-eduSecondary pb-2 mb-6 flex items-center gap-3">
+                        <i class="fas fa-award text-eduPrimary"></i> Keahlian
+                    </h3>
+                    
+                    <!-- Keahlian Utama (Kompetensi Pedagogik) -->
+                    <div class="space-y-5 mb-8">
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold text-slate-700 mb-1">
+                                <span>Manajemen Kelas</span>
+                                <span class="text-eduPrimary">Sangat Baik</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                <div class="bg-eduPrimary h-2.5 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold text-slate-700 mb-1">
+                                <span>Implementasi Kurikulum Merdeka</span>
+                                <span class="text-eduPrimary">Sangat Baik</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                <div class="bg-eduPrimary h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold text-slate-700 mb-1">
+                                <span>Pendekatan Pedagogik & Psikologi Anak</span>
+                                <span class="text-eduPrimary">Baik</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                <div class="bg-eduPrimary h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold text-slate-700 mb-1">
+                                <span>Evaluasi Pembelajaran (Asesmen)</span>
+                                <span class="text-eduPrimary">Baik</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                <div class="bg-eduPrimary h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Keterampilan Teknis & Tambahan (Tags) -->
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Keterampilan Tambahan</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 bg-emerald-50 text-eduPrimary text-sm rounded-md border border-emerald-200 font-medium"><i class="fas fa-desktop mr-1"></i> Ms. Office</span>
+                            <span class="px-3 py-1.5 bg-emerald-50 text-eduPrimary text-sm rounded-md border border-emerald-200 font-medium">Pembuatan Modul Ajar</span>
+                            <span class="px-3 py-1.5 bg-emerald-50 text-eduPrimary text-sm rounded-md border border-emerald-200 font-medium">Alat Peraga Kreatif</span>
+                            <span class="px-3 py-1.5 bg-emerald-50 text-eduPrimary text-sm rounded-md border border-emerald-200 font-medium">Komunikasi Interpersonal</span>
+                            <span class="px-3 py-1.5 bg-emerald-50 text-eduPrimary text-sm rounded-md border border-emerald-200 font-medium">Kepramukaan</span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+        
+        <!-- Footer / Penutup -->
+        <footer class="bg-slate-100 p-6 text-center border-t border-slate-200">
+            <p class="text-slate-500 text-sm">© 2026 Curriculum Vitae - Asnaeni, S.Pd. Dibuat dengan penuh dedikasi untuk pendidikan.</p>
+        </footer>
     </div>
-
-</section>
-
-
-
-<!-- PELATIHAN -->
-
-<section class="mb-10
-                print-break">
-
-    <div class="flex items-center
-                gap-4 mb-6">
-
-        <div class="w-11 h-11
-                    rounded-xl
-                    bg-blue-100
-                    text-blue-600
-                    flex items-center
-                    justify-center
-                    text-xl">
-
-            📜
-
-        </div>
-
-
-        <div>
-
-            <p class="text-xs
-                      uppercase
-                      tracking-wider
-                      text-blue-600
-                      font-bold">
-
-                Profesional
-
-            </p>
-
-            <h2 class="text-2xl
-                       font-bold
-                       text-slate-900">
-
-                Pelatihan & Sertifikasi
-
-            </h2>
-
-        </div>
-
-    </div>
-
-
-    <div class="grid sm:grid-cols-2
-                gap-4">
-
-
-        <div class="p-4
-                    rounded-xl
-                    bg-slate-50
-                    border
-                    border-slate-200">
-
-            <p class="font-semibold
-                      text-slate-900">
-
-                Kurikulum dan Pembelajaran
-
-            </p>
-
-            <p class="text-xs
-                      text-slate-400 mt-1">
-
-                Tahun • Lembaga
-
-            </p>
-
-        </div>
-
-
-        <div class="p-4
-                    rounded-xl
-                    bg-slate-50
-                    border
-                    border-slate-200">
-
-            <p class="font-semibold
-                      text-slate-900">
-
-                Pembelajaran Digital
-
-            </p>
-
-            <p class="text-xs
-                      text-slate-400 mt-1">
-
-                Tahun • Lembaga
-
-            </p>
-
-        </div>
-
-
-        <div class="p-4
-                    rounded-xl
-                    bg-slate-50
-                    border
-                    border-slate-200">
-
-            <p class="font-semibold
-                      text-slate-900">
-
-                Asesmen Pembelajaran
-
-            </p>
-
-            <p class="text-xs
-                      text-slate-400 mt-1">
-
-                Tahun • Lembaga
-
-            </p>
-
-        </div>
-
-
-        <div class="p-4
-                    rounded-xl
-                    bg-slate-50
-                    border
-                    border-slate-200">
-
-            <p class="font-semibold
-                      text-slate-900">
-
-                Pengembangan Kompetensi Guru
-
-            </p>
-
-            <p class="text-xs
-                      text-slate-400 mt-1">
-
-                Tahun • Lembaga
-
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- FILOSOFI -->
-
-<section class="print-break">
-
-    <div class="rounded-2xl
-                bg-blue-50
-                border
-                border-blue-100
-                p-6">
-
-        <p class="text-xs
-                  uppercase
-                  tracking-wider
-                  font-bold
-                  text-blue-600
-                  mb-3">
-
-            Filosofi Pendidikan
-
-        </p>
-
-
-        <blockquote class="text-lg
-                           md:text-xl
-                           font-semibold
-                           text-slate-800
-                           leading-relaxed">
-
-            “Setiap murid memiliki potensi untuk berkembang.
-            Pendidik hadir untuk memberikan ruang, bimbingan,
-            dan kesempatan agar setiap potensi dapat tumbuh
-            secara optimal.”
-
-        </blockquote>
-
-    </div>
-
-</section>
-
-
-</section>
-
-</div>
-
-
-
-<!-- =========================================================
-     FOOTER
-========================================================= -->
-
-<footer class="border-t
-               border-slate-200
-               px-8 md:px-12
-               py-6
-               flex flex-col
-               md:flex-row
-               justify-between
-               gap-2
-               text-xs
-               text-slate-400">
-
-    <span>
-        Curriculum Vitae • Asnaeni
-    </span>
-
-    <span>
-        SD NEGERI 007 NUNUKAN
-    </span>
-
-</footer>
-
-
-</main>
-
-
-
-<!-- =========================================================
-     MOBILE PRINT BUTTON
-========================================================= -->
-
-<div class="no-print
-            fixed
-            bottom-5
-            right-5
-            md:hidden">
-
-    <button
-        onclick="window.print()"
-        class="w-14 h-14
-               rounded-full
-               bg-blue-600
-               text-white
-               shadow-xl
-               flex items-center
-               justify-center
-               text-xl">
-
-        🖨️
-
-    </button>
-
-</div>
-
 
 </body>
 </html>
