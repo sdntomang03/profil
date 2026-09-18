@@ -38,36 +38,54 @@
             animation: shake 0.5s;
         }
 
-        /* Pilihan jawaban: huruf dan matematika selalu satu baris */
+        /* Pilihan jawaban: label dan matematika sejajar */
         .option-btn {
-            display: flex !important;
+            display: grid !important;
+            grid-template-columns: 2.5rem minmax(0, 1fr);
             align-items: center !important;
-            gap: 0.5rem;
+            column-gap: 0.5rem;
+            white-space: normal;
         }
 
         .option-letter {
-            flex: 0 0 2rem;
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            justify-content: flex-start;
+            width: 2.5rem;
             font-weight: 700;
         }
 
         .option-math {
-            display: inline-flex;
-            align-items: center;
-            flex: 1;
+            display: block;
             min-width: 0;
+            line-height: 1.5;
+            overflow-x: auto;
+            overflow-y: hidden;
         }
 
         .option-math mjx-container {
+            display: inline-block !important;
             margin: 0 !important;
+            max-width: 100%;
         }
+
         @keyframes shake {
             0% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
             50% { transform: translateX(5px); }
             75% { transform: translateX(-5px); }
             100% { transform: translateX(0); }
+        }
+        @media (max-width: 640px) {
+            .option-btn {
+                grid-template-columns: 2.25rem minmax(0, 1fr);
+                padding: 1rem !important;
+                font-size: 1.05rem !important;
+            }
+
+            .option-letter {
+                width: 2.25rem;
+            }
         }
     </style>
 </head>
