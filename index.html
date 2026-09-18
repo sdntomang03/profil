@@ -37,6 +37,31 @@
         .shake-animation {
             animation: shake 0.5s;
         }
+
+        /* Pilihan jawaban: huruf dan matematika selalu satu baris */
+        .option-btn {
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.5rem;
+        }
+
+        .option-letter {
+            flex: 0 0 2rem;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .option-math {
+            display: inline-flex;
+            align-items: center;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .option-math mjx-container {
+            margin: 0 !important;
+        }
         @keyframes shake {
             0% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
@@ -426,7 +451,7 @@ PENTING:
                 body = `\\(${body}\\)`;
             }
 
-            return `<span class="inline-block w-8">${letter}.</span> <span class="math-option">${body}</span>`;
+            return `<span class="option-letter">${letter}.</span><span class="option-math">${body}</span>`;
         }
 
         function cleanMathOption(text) {
@@ -486,7 +511,7 @@ PENTING:
                 const optionLetter = String(optionText).trim().substring(0, 1).toUpperCase();
                 const btn = document.createElement('button');
 
-                btn.className = `option-btn btn-bouncy w-full text-left p-5 text-xl font-bold rounded-2xl border-4 border-gray-200 bg-white text-gray-700 shadow-sm hover:border-blue-400 hover:bg-blue-50 focus:outline-none transition-colors duration-200`;
+                btn.className = `option-btn btn-bouncy w-full text-left p-5 text-xl font-bold rounded-2xl border-4 border-gray-200 bg-white text-gray-700 shadow-sm hover:border-blue-400 hover:bg-blue-50 focus:outline-none transition-colors duration-200 flex items-center gap-2`;
 
                 // Gunakan innerHTML agar MathJax dapat membaca LaTeX.
                 btn.innerHTML = formatOptionLatex(optionText);
