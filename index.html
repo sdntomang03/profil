@@ -102,6 +102,10 @@
             </div>
 
             <div class="p-6 md:p-10">
+                <div class="flex items-center justify-between mb-4">
+                    <span id="q-number" class="text-sm md:text-base font-bold text-blue-600 bg-blue-50 px-4 py-2 rounded-full">Soal 1 dari 5</span>
+                    <span id="q-progress" class="text-sm md:text-base font-semibold text-gray-500">0 / 5</span>
+                </div>
                 <div class="bg-yellow-50 border-l-8 border-yellow-400 p-6 rounded-2xl mb-8 shadow-inner">
                     <p id="q-text" class="text-2xl md:text-3xl font-bold leading-tight text-gray-700"></p>
                 </div>
@@ -125,7 +129,10 @@
 
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <button onclick="retryCurrentTopic()" class="btn-bouncy w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white text-xl font-bold py-4 px-8 rounded-full shadow-lg border-b-4 border-green-700">
-                            Coba Soal Lain 🎲
+                            Buat 5 Soal Lain 🎲
+                        </button>
+                        <button id="next-question-btn" onclick="nextQuestion()" class="btn-bouncy w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold py-4 px-8 rounded-full shadow-lg border-b-4 border-blue-700">
+                            Soal Berikutnya ➜
                         </button>
                         <button onclick="showTopics()" class="btn-bouncy w-full sm:w-auto bg-gray-200 hover:bg-gray-300 text-gray-700 text-xl font-bold py-4 px-8 rounded-full shadow-md border-b-4 border-gray-400">
                             Pilih Materi Lain
@@ -147,6 +154,8 @@
 
         let currentTopic = null;
         let currentQuestionData = null;
+        let questionBatch = [];
+        let currentQuestionIndex = 0;
         let isAnswering = false;
 
         window.onload = () => {
@@ -237,10 +246,10 @@
 
         async function fetchAndRenderQuestion() {
             showLoading();
-            
+
             try {
-                const apiKey = localStorage.getItem('groq_api_key'); 
-                
+                const apiKey = localStorage.getItem('groq_api_key');
+
                 if (!apiKey) {
                     alert("API Key tidak ditemukan. Silakan masukkan kembali.");
                     resetApiKey();
@@ -248,14 +257,15 @@
                 }
 
                 const prompt = `Anda adalah guru matematika SD kelas 4.
-Buat tepat 1 soal cerita tentang topik: "${currentTopic.title}".
+Buat TEPAT 5 soal cerita yang BERBEDA tentang topik: "${currentTopic.title}".
 
 Tujuan:
 Murid memilih kalimat matematika yang paling sesuai dengan soal cerita. Setiap pilihan juga harus menampilkan hasil perhitungan.
 
-Aturan:
+Aturan untuk setiap soal:
 - Gunakan konteks kehidupan sehari-hari yang mudah dipahami murid kelas 4.
-- Buat 4 pilihan: A, B, C, D.
+- Kelima soal harus berbeda angka, konteks, dan perhitungannya.
+- Buat tepat 4 pilihan: A, B, C, D.
 - Hanya satu pilihan yang paling tepat berdasarkan soal cerita.
 - Setiap pilihan harus berupa SATU baris kalimat matematika lengkap dan diakhiri hasil setelah tanda "=".
 - Hasil pada setiap pilihan harus benar sesuai operasi pada pilihan tersebut.
@@ -268,35 +278,36 @@ Aturan:
 - Periksa ulang semua hasil hitung sebelum memberikan jawaban.
 - Jangan menaruh tanda kurung yang tidak diperlukan hanya untuk hiasan.
 - Simbol yang boleh digunakan: +, -, ×, ÷, =, dan ( ).
+- Untuk materi pecahan, WAJIB gunakan LaTeX untuk pecahan. Contoh: $\\frac{1}{2}$ + $\\frac{1}{4}$ = $\\frac{3}{4}$.
+- Untuk pilihan pecahan, gunakan LaTeX pada seluruh ekspresi matematika. Jangan menulis kode LaTeX mentah tanpa delimiter $...$.
+- Acak posisi jawaban benar. Jangan selalu A.
 
-Format isi:
-soal_cerita: soal cerita.
-pilihan_kalimat_matematika: empat string, masing-masing diawali A., B., C., atau D.
-jawaban_benar: hanya huruf A, B, C, atau D.
-pembahasan: penjelasan singkat mengapa jawaban benar dan mengapa pilihan lain tidak tepat. Jika ada tanda kurung, jelaskan bagian yang dikerjakan terlebih dahulu.
+Format JSON WAJIB:
+{
+  "soal": [
+    {
+      "soal_cerita": "Teks soal cerita.",
+      "pilihan_kalimat_matematika": [
+        "A. kalimat matematika = hasil",
+        "B. kalimat matematika = hasil",
+        "C. kalimat matematika = hasil",
+        "D. kalimat matematika = hasil"
+      ],
+      "jawaban_benar": "A",
+      "pembahasan": "Penjelasan singkat."
+    }
+  ]
+}
 
 PENTING:
-Kembalikan HANYA objek JSON valid.
-Jangan gunakan markdown.
-Jangan gunakan blok kode.
-Jangan menambahkan teks sebelum atau sesudah objek JSON.
-Gunakan simbol uang dan lainnya dengan benar. Acak jawaban_soal setiap kali ada request, jangan selalu pilihan A
-Gunakan struktur JSON berikut:
-{
-  "soal_cerita": "Teks soal cerita.",
-  "pilihan_kalimat_matematika": [
-    "A. kalimat matematika = hasil",
-    "B. kalimat matematika = hasil",
-    "C. kalimat matematika = hasil",
-    "D. kalimat matematika = hasil"
-  ],
-  "jawaban_benar": "A",
-  "pembahasan": "Penjelasan."
-} 
-  Cek kembali hasil JSON agar valid, lengkap, dan sesuai struktur di atas.`;
+- Array "soal" harus berisi TEPAT 5 objek.
+- Setiap objek harus memiliki 4 pilihan.
+- jawaban_benar hanya boleh A, B, C, atau D.
+- Kembalikan HANYA JSON valid.
+- Jangan gunakan markdown atau blok kode.
+- Jangan menambahkan teks sebelum atau sesudah JSON.`;
 
-                // Perbaikan Endpoint Groq lengkap dengan /chat/completions dan model yang valid
-              const requestGroq = async (model) => {
+                const requestGroq = async (model) => {
                     return fetch("https://api.groq.com/openai/v1/chat/completions", {
                         method: "POST",
                         headers: {
@@ -308,28 +319,24 @@ Gunakan struktur JSON berikut:
                             messages: [
                                 {
                                     role: "system",
-                                    content: "Anda adalah guru matematika SD kelas 4. Hasilkan hanya objek JSON valid sesuai struktur yang diminta. Jangan gunakan markdown, blok kode, atau teks di luar JSON."
+                                    content: "Anda adalah guru matematika SD kelas 4. Hasilkan tepat 5 soal dalam satu objek JSON valid. Jangan gunakan markdown atau teks di luar JSON."
                                 },
                                 {
                                     role: "user",
                                     content: prompt
                                 }
                             ],
-                            response_format: {
-                                type: "json_object"
-                            },
-                            temperature: 0.7,
-                            max_tokens: 4000
+                            response_format: { type: "json_object" },
+                            temperature: 0.8,
+                            max_tokens: 5000
                         })
                     });
                 };
 
-                // Model utama.
                 let response = await requestGroq("llama-3.3-70b-versatile");
 
-                // Jika model utama tidak tersedia pada akun/endpoint, coba GPT-OSS 120B.
                 if (response.status === 404) {
-                    console.warn("Model utama mengembalikan 404. Mencoba openai/gpt-oss-120b...");
+                    console.warn("Model utama 404. Mencoba openai/gpt-oss-120b...");
                     response = await requestGroq("openai/gpt-oss-120b");
                 }
 
@@ -341,36 +348,40 @@ Gunakan struktur JSON berikut:
                         responseData?.error?.failed_generation ||
                         responseData?.failed_generation ||
                         `HTTP error! status: ${response.status}`;
-
-                    if (response.status === 404) {
-                        throw new Error(
-                            "Groq mengembalikan 404. Endpoint atau model tidak tersedia. " +
-                            "Periksa API key dan model Groq yang tersedia pada akun Anda."
-                        );
-                    }
                     throw new Error(message);
                 }
 
                 const textResult = responseData?.choices?.[0]?.message?.content;
-
                 if (!textResult) {
                     throw new Error("Groq tidak mengembalikan isi jawaban.");
                 }
 
                 const parsedData = JSON.parse(textResult);
-                
-                if (!parsedData.soal_cerita || !parsedData.pilihan_kalimat_matematika || !parsedData.jawaban_benar) {
-                    throw new Error("Format JSON tidak lengkap.");
+
+                if (!Array.isArray(parsedData.soal) || parsedData.soal.length !== 5) {
+                    throw new Error("AI tidak mengembalikan tepat 5 soal.");
                 }
 
-                currentQuestionData = parsedData;
+                parsedData.soal.forEach((q, i) => {
+                    if (!q.soal_cerita ||
+                        !Array.isArray(q.pilihan_kalimat_matematika) ||
+                        q.pilihan_kalimat_matematika.length !== 4 ||
+                        !q.jawaban_benar ||
+                        !q.pembahasan) {
+                        throw new Error(`Format soal ke-${i + 1} tidak lengkap.`);
+                    }
+                });
+
+                questionBatch = parsedData.soal;
+                currentQuestionIndex = 0;
+                currentQuestionData = questionBatch[0];
+
                 renderQuestionUI();
 
             } catch (error) {
                 console.error("Gagal mengambil soal:", error);
-                console.error("Endpoint:", "https://api.groq.com/openai/v1/chat/completions");
                 alert(
-                    "Gagal membuat soal.\n\n" +
+                    "Gagal membuat 5 soal.\n\n" +
                     (error?.message || "Kesalahan tidak diketahui.") +
                     "\n\nPeriksa API key Groq dan koneksi internet."
                 );
@@ -388,59 +399,97 @@ Gunakan struktur JSON berikut:
         }
 
         function formatOptionLatex(optionText) {
-            let text = escapeHtml(optionText);
+            let text = escapeHtml(optionText).trim();
 
-            // Jika AI sudah memberikan delimiter LaTeX, biarkan MathJax memprosesnya.
-            if (!/[\\$]/.test(text) && /\\(?:frac|dfrac|tfrac|times|div|cdot|sqrt|left|right|text|mathrm|mathbf|begin|over)/.test(text)) {
-                const match = text.match(/^([A-D])\\.\\s*(.*)$/s);
-                if (match) {
-                    text = `${match[1]}. \\(${match[2]}\\)`;
-                }
+            // Pilihan selalu berbentuk A./B./C./D. + ekspresi.
+            const match = text.match(/^([A-D])\.\s*(.*)$/s);
+            if (!match) return text;
+
+            const letter = match[1];
+            let body = match[2].trim();
+
+            // Jika AI belum memberi delimiter LaTeX, bungkus ekspresinya.
+            if (!body.includes('\\(') && !body.includes('\\[') && !body.includes('$')) {
+                body = `\\(${body}\\)`;
             }
 
-            // Dukungan tambahan jika AI mengirim bentuk LaTeX tanpa delimiter,
-            // tetapi hanya berupa ekspresi matematika setelah A./B./C./D.
-            const plain = text.match(/^([A-D])\\.\\s*(.+)$/s);
-            if (plain && !/[\\$]|\\\\\(|\\\\\[/.test(text)) {
-                const body = plain[2];
-                if (/\\\\[a-zA-Z]+|[{}^_]/.test(body)) {
-                    text = `${plain[1]}. \\(${body}\\)`;
-                }
-            }
+            return `<span class="inline-block w-8">${letter}.</span> ${body}`;
+        }
 
-            return text;
+        function formatStoryText(text) {
+            let safe = escapeHtml(text);
+
+            // Jika AI mengirim LaTeX tanpa delimiter, ubah hanya bagian
+            // yang jelas merupakan perintah LaTeX menjadi inline math.
+            safe = safe.replace(
+                /\\(?:frac|dfrac|tfrac|sqrt)\{[^{}]*\}(?:\{[^{}]*\})?/g,
+                match => `\\(${match}\\)`
+            );
+
+            return safe;
         }
 
         function renderMath() {
             if (window.MathJax && MathJax.typesetPromise) {
-                MathJax.typesetPromise([document.getElementById('q-options')]).catch(err => {
-                    console.error('MathJax gagal merender pilihan:', err);
+                MathJax.typesetPromise([
+                    document.getElementById('q-text'),
+                    document.getElementById('q-options'),
+                    document.getElementById('q-explanation')
+                ]).catch(err => {
+                    console.error('MathJax gagal merender:', err);
                 });
             }
         }
 
         function renderQuestionUI() {
             isAnswering = true;
+
+            const total = questionBatch.length || 5;
+            const number = currentQuestionIndex + 1;
+
             document.getElementById('q-result-area').classList.add('hidden');
             document.getElementById('q-topic-badge').innerText = `Misi: ${currentTopic.title}`;
-            document.getElementById('q-text').innerText = currentQuestionData.soal_cerita;
-            
+            document.getElementById('q-number').innerText = `Soal ${number} dari ${total}`;
+            document.getElementById('q-progress').innerText = `${currentQuestionIndex} / ${total}`;
+            document.getElementById('q-text').innerHTML = formatStoryText(currentQuestionData.soal_cerita);
+
             const optionsContainer = document.getElementById('q-options');
             optionsContainer.innerHTML = '';
 
             currentQuestionData.pilihan_kalimat_matematika.forEach(optionText => {
-                const optionLetter = optionText.substring(0, 1); 
+                const optionLetter = String(optionText).trim().substring(0, 1).toUpperCase();
                 const btn = document.createElement('button');
+
                 btn.className = `option-btn btn-bouncy w-full text-left p-5 text-xl font-bold rounded-2xl border-4 border-gray-200 bg-white text-gray-700 shadow-sm hover:border-blue-400 hover:bg-blue-50 focus:outline-none transition-colors duration-200`;
-                // Render pilihan yang mengandung LaTeX dengan MathJax.
-                // innerText membuat kode seperti \frac{1}{2} tampil mentah.
+
+                // Gunakan innerHTML agar MathJax dapat membaca LaTeX.
                 btn.innerHTML = formatOptionLatex(optionText);
+                btn.dataset.letter = optionLetter;
                 btn.onclick = () => handleAnswerSelect(btn, optionLetter);
+
                 optionsContainer.appendChild(btn);
             });
 
+            const nextBtn = document.getElementById('next-question-btn');
+            nextBtn.innerText = number < total ? 'Soal Berikutnya ➜' : 'Selesai 🎉';
+
             showQuestionScreen();
-            renderMath();
+
+            // Beri sedikit waktu agar DOM selesai dibuat sebelum MathJax.
+            requestAnimationFrame(() => renderMath());
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questionBatch.length - 1) {
+                currentQuestionIndex++;
+                currentQuestionData = questionBatch[currentQuestionIndex];
+                renderQuestionUI();
+            } else {
+                // Setelah soal ke-5, buat 5 soal baru.
+                fetchAndRenderQuestion();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function handleAnswerSelect(clickedButton, selectedLetter) {
@@ -449,15 +498,15 @@ Gunakan struktur JSON berikut:
 
             const correctLetter = currentQuestionData.jawaban_benar.trim().toUpperCase();
             const isCorrect = (selectedLetter === correctLetter);
-            
+
             const allOptionButtons = document.querySelectorAll('.option-btn');
-            
+
             allOptionButtons.forEach(btn => {
                 btn.disabled = true;
                 btn.classList.remove('hover:border-blue-400', 'hover:bg-blue-50', 'btn-bouncy');
-                
-                const btnLetter = btn.innerText.substring(0, 1);
-                
+
+                const btnLetter = btn.dataset.letter;
+
                 if (btnLetter === correctLetter) {
                     btn.classList.replace('border-gray-200', 'border-green-500');
                     btn.classList.replace('bg-white', 'bg-green-100');
@@ -475,6 +524,7 @@ Gunakan struktur JSON berikut:
             });
 
             const resultMessage = document.getElementById('q-result-message');
+
             if (isCorrect) {
                 resultMessage.innerText = "🌟 Yey! Pilihanmu Tepat Sekali!";
                 resultMessage.className = "text-2xl font-bold text-center mb-6 rounded-xl py-4 bg-green-500 text-white shadow-md";
@@ -483,11 +533,23 @@ Gunakan struktur JSON berikut:
                 resultMessage.className = "text-2xl font-bold text-center mb-6 rounded-xl py-4 bg-orange-500 text-white shadow-md";
             }
 
-            document.getElementById('q-explanation').innerText = currentQuestionData.pembahasan;
+            document.getElementById('q-explanation').innerHTML =
+                formatStoryText(currentQuestionData.pembahasan);
+
+            const nextBtn = document.getElementById('next-question-btn');
+            nextBtn.innerText =
+                currentQuestionIndex < questionBatch.length - 1
+                    ? 'Soal Berikutnya ➜'
+                    : 'Buat 5 Soal Baru 🔄';
+
             document.getElementById('q-result-area').classList.remove('hidden');
-            
+
             setTimeout(() => {
-                document.getElementById('q-result-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                renderMath();
+                document.getElementById('q-result-area').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }, 100);
         }
     </script>
