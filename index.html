@@ -3,241 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curriculum Vitae - Asnaeni (Guru SD Negeri 007 Nunukan)</title>
-    
-    <!-- Memuat Tailwind CSS melalui CDN -->
+    <title>Petualangan Matematika</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Memuat Google Fonts (Inter & Merriweather) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Memuat FontAwesome untuk Ikon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Konfigurasi Tema Tailwind Kustom -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Merriweather', 'serif'],
-                    },
-                    colors: {
-                        eduPrimary: '#047857', /* Emerald-700 */
-                        eduSecondary: '#10b981', /* Emerald-500 */
-                        eduLight: '#ecfdf5', /* Emerald-50 */
-                        eduDark: '#064e3b', /* Emerald-900 */
-                    }
-                }
-            }
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            /* Background ceria seperti langit dan padang rumput */
+            background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 50%, #bbf7d0 100%);
+            min-height: 100vh;
         }
-    </script>
+        .btn-bouncy {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-bouncy:active {
+            transform: scale(0.95);
+        }
+        .btn-bouncy:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .shake-animation {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased py-8 px-4 sm:px-8">
+<body class="text-gray-800 p-4 md:p-8 flex items-center justify-center">
 
-    <div class="max-w-5xl mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-slate-200">
+    <!-- Main App Container -->
+    <div class="max-w-3xl w-full bg-white/90 backdrop-blur-sm rounded-[2rem] shadow-2xl overflow-hidden border-4 border-white">
         
-        <!-- Bagian Header (Informasi Utama) -->
-        <header class="bg-eduPrimary text-white p-8 md:p-12 relative overflow-hidden">
-            <!-- Elemen Dekoratif -->
-            <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-eduSecondary rounded-full opacity-20 blur-3xl"></div>
-            <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-eduDark rounded-full opacity-30 blur-2xl"></div>
-
-            <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-8">
-                <!-- Foto Profil Pendidik -->
-                <div class="shrink-0">
-                    <img src="https://kliksumut.com/wp-content/uploads/2026/09/Maudy-Ayunda.jpg" alt="Foto Profil Asnaeni" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white object-cover shadow-md">
-                </div>
-                
-                <!-- Detail Nama dan Jabatan -->
-                <div class="flex-grow text-center md:text-left">
-                    <h1 class="text-3xl md:text-5xl font-bold tracking-tight font-serif">Asnaeni, S.Pd.</h1>
-                    <h2 class="text-xl md:text-2xl text-emerald-200 font-medium mt-2">Guru Pendidik - SD NEGERI 007 NUNUKAN</h2>
-                    
-                    <!-- Informasi Kontak -->
-                    <div class="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-3 text-sm md:text-base text-emerald-50 mt-5">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-envelope text-emerald-300"></i>
-                            <a href="mailto:asnaeni.guru@example.com" class="hover:text-white transition">asnaeni.guru@example.com</a>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-phone text-emerald-300"></i>
-                            <a href="tel:+6281234567890" class="hover:text-white transition">+62 812-3456-7890</a>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-map-marker-alt text-emerald-300"></i>
-                            <span>Nunukan, Kalimantan Utara</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <main class="grid grid-cols-1 md:grid-cols-3 gap-10 p-8 md:p-12">
+        <!-- Screen 1: Topic Selection -->
+        <div id="screen-topics" class="p-8 text-center block">
+            <h1 class="text-4xl md:text-5xl font-bold text-blue-600 mb-2 drop-shadow-sm">Petualangan Matematika! 🚀</h1>
+            <p class="text-xl text-gray-600 mb-8 font-semibold">Pilih misi belajarmu hari ini:</p>
             
-            <!-- Kolom Utama Kiri -->
-            <div class="md:col-span-2 space-y-10">
-                
-                <!-- Tentang Saya / Profil Pendidik -->
-                <section>
-                    <h3 class="text-2xl font-bold text-slate-800 border-b-2 border-eduSecondary pb-2 mb-4 flex items-center gap-3">
-                        <i class="fas fa-chalkboard-teacher text-eduPrimary"></i> Profil Pendidik
-                    </h3>
-                    <p class="text-slate-600 leading-relaxed text-justify">
-                        Seorang tenaga pendidik yang berdedikasi tinggi dengan fokus pada pembentukan karakter dan prestasi akademik siswa sekolah dasar. Berkomitmen penuh untuk menciptakan lingkungan belajar yang aman, inklusif, dan interaktif. Memiliki pemahaman yang kuat dalam penerapan metode pembelajaran modern serta selalu berupaya menjadi fasilitator yang baik untuk mendukung potensi maksimal setiap peserta didik di SD Negeri 007 Nunukan.
-                    </p>
-                </section>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="topics-container">
+                <!-- Topics will be generated here by JS -->
+            </div>
+        </div>
 
-                <section>
-                    <h3 class="text-2xl font-bold text-slate-800 border-b-2 border-eduSecondary pb-2 mb-6 flex items-center gap-3">
-                        <i class="fas fa-book-reader text-eduPrimary"></i> Pengalaman Mengajar
-                    </h3>
-                    
-                    <div class="space-y-8">
-                        <!-- Pengalaman Saat Ini -->
-                        <article class="relative pl-6 border-l-2 border-emerald-200">
-                            <div class="absolute w-4 h-4 bg-eduPrimary rounded-full -left-[9px] top-1 shadow-sm"></div>
-                            <h4 class="text-xl font-bold text-slate-800">Guru Kelas</h4>
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-slate-500 mb-3 mt-1">
-                                <span class="font-semibold text-eduPrimary">SD Negeri 007 Nunukan</span>
-                                <span class="hidden sm:inline">•</span>
-                                <span><i class="far fa-calendar-alt mr-1"></i> Juli 2018 - Sekarang</span>
-                            </div>
-                            <ul class="list-none text-slate-600 space-y-2">
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
-                                    <span>Merencanakan dan melaksanakan kegiatan pembelajaran yang menarik sesuai dengan standar Kurikulum Merdeka.</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
-                                    <span>Melakukan evaluasi perkembangan akademik dan karakter siswa secara berkala, serta mengomunikasikannya dengan wali murid.</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
-                                    <span>Mengelola administrasi kelas dan menyusun perangkat pembelajaran (RPP/Modul Ajar, Silabus, dan bahan ajar).</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
-                                    <span>Aktif berpartisipasi dalam Kelompok Kerja Guru (KKG) tingkat gugus untuk pengembangan keprofesian berkelanjutan.</span>
-                                </li>
-                            </ul>
-                        </article>
+        <!-- Screen 2: Loading -->
+        <div id="screen-loading" class="p-12 text-center hidden flex-col items-center justify-center min-h-[400px]">
+            <div class="text-6xl mb-6 animate-bounce">🤖</div>
+            <h2 class="text-3xl font-bold text-purple-600 mb-2">Meracik Soal Spesial...</h2>
+            <p class="text-lg text-gray-500">Tunggu sebentar ya, AI sedang berpikir keras untukmu!</p>
+            
+            <!-- Loading Spinner -->
+            <div class="mt-8 flex justify-center space-x-2">
+                <div class="w-4 h-4 bg-blue-500 rounded-full animate-pulse"></div>
+                <div class="w-4 h-4 bg-yellow-400 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                <div class="w-4 h-4 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+            </div>
+        </div>
 
-                        <!-- Pengalaman Sebelumnya -->
-                        <article class="relative pl-6 border-l-2 border-emerald-200">
-                            <div class="absolute w-3 h-3 bg-emerald-300 rounded-full -left-[7px] top-1"></div>
-                            <h4 class="text-xl font-semibold text-slate-800">Guru Honorer</h4>
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-slate-500 mb-3 mt-1">
-                                <span class="font-medium text-eduPrimary">SD Negeri (Contoh) Nunukan</span>
-                                <span class="hidden sm:inline">•</span>
-                                <span><i class="far fa-calendar-alt mr-1"></i> Jan 2015 - Jun 2018</span>
-                            </div>
-                            <ul class="list-none text-slate-600 space-y-2">
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
-                                    <span>Membantu guru utama dalam proses belajar mengajar dan pendampingan siswa berkebutuhan khusus di kelas.</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-eduSecondary mt-1 text-sm"></i>
-                                    <span>Mempersiapkan media pembelajaran visual dan alat peraga edukatif untuk meningkatkan minat belajar siswa.</span>
-                                </li>
-                            </ul>
-                        </article>
-                    </div>
-                </section>
+        <!-- Screen 3: Question -->
+        <div id="screen-question" class="hidden">
+            <!-- Header for Question Screen -->
+            <div class="bg-blue-500 p-4 text-white flex justify-between items-center rounded-t-[1.5rem]">
+                <span id="q-topic-badge" class="bg-white/20 px-4 py-1 rounded-full font-bold text-sm tracking-wider uppercase text-blue-50">Topik</span>
+                <button onclick="showTopics()" class="text-white hover:text-blue-200 font-bold text-sm bg-black/10 px-3 py-1 rounded-full">Tutup ✖</button>
             </div>
 
-            <div class="space-y-10">
+            <div class="p-6 md:p-10">
+                <!-- Question Text -->
+                <div class="bg-yellow-50 border-l-8 border-yellow-400 p-6 rounded-2xl mb-8 shadow-inner">
+                    <p id="q-text" class="text-2xl md:text-3xl font-bold leading-tight text-gray-700"></p>
+                </div>
+
+                <p class="text-lg font-semibold text-center mb-4 text-gray-500">Pilih kalimat matematika yang tepat:</p>
                 
-                <!-- Riwayat Pendidikan -->
-                <section>
-                    <h3 class="text-2xl font-bold text-slate-800 border-b-2 border-eduSecondary pb-2 mb-6 flex items-center gap-3">
-                        <i class="fas fa-graduation-cap text-eduPrimary"></i> Pendidikan
-                    </h3>
+                <!-- Options Grid -->
+                <div id="q-options" class="flex flex-col gap-4 mb-8">
+                    <!-- Buttons generated by JS -->
+                </div>
+
+                <!-- Result Area (Hidden initially) -->
+                <div id="q-result-area" class="hidden">
+                    <div id="q-result-message" class="text-2xl font-bold text-center mb-4 rounded-xl py-3 text-white">
+                        <!-- Result Message (Benar/Salah) -->
+                    </div>
                     
-                    <div class="space-y-6">
-                        <article class="bg-eduLight p-4 rounded-lg border border-emerald-100">
-                            <h4 class="text-lg font-bold text-slate-800">S1 Pendidikan Guru Sekolah Dasar (PGSD)</h4>
-                            <p class="text-eduPrimary font-medium text-sm mt-1">Universitas Borneo Tarakan</p>
-                            <div class="flex items-center gap-2 text-sm text-slate-500 mt-2">
-                                <i class="far fa-calendar-alt"></i>
-                                <span>Lulus Tahun 2014</span>
-                            </div>
-                            <p class="text-slate-600 text-sm mt-3 border-t border-emerald-200 pt-2">Aktif dalam kegiatan himpunan mahasiswa keguruan dan mengikuti berbagai seminar pendidikan dasar.</p>
-                        </article>
-                    </div>
-                </section>
-
-                <!-- Keahlian Pendidik -->
-                <section>
-                    <h3 class="text-2xl font-bold text-slate-800 border-b-2 border-eduSecondary pb-2 mb-6 flex items-center gap-3">
-                        <i class="fas fa-award text-eduPrimary"></i> Keahlian
-                    </h3>
-                    
-                    <!-- Keahlian Utama (Kompetensi Pedagogik) -->
-                    <div class="space-y-5 mb-8">
-                        <div>
-                            <div class="flex justify-between text-sm font-semibold text-slate-700 mb-1">
-                                <span>Manajemen Kelas</span>
-                                <span class="text-eduPrimary">Sangat Baik</span>
-                            </div>
-                            <div class="w-full bg-slate-200 rounded-full h-2.5">
-                                <div class="bg-eduPrimary h-2.5 rounded-full" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-sm font-semibold text-slate-700 mb-1">
-                                <span>Implementasi Kurikulum Merdeka</span>
-                                <span class="text-eduPrimary">Sangat Baik</span>
-                            </div>
-                            <div class="w-full bg-slate-200 rounded-full h-2.5">
-                                <div class="bg-eduPrimary h-2.5 rounded-full" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-sm font-semibold text-slate-700 mb-1">
-                                <span>Pendekatan Pedagogik & Psikologi Anak</span>
-                                <span class="text-eduPrimary">Baik</span>
-                            </div>
-                            <div class="w-full bg-slate-200 rounded-full h-2.5">
-                                <div class="bg-eduPrimary h-2.5 rounded-full" style="width: 85%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-sm font-semibold text-slate-700 mb-1">
-                                <span>Evaluasi Pembelajaran (Asesmen)</span>
-                                <span class="text-eduPrimary">Baik</span>
-                            </div>
-                            <div class="w-full bg-slate-200 rounded-full h-2.5">
-                                <div class="bg-eduPrimary h-2.5 rounded-full" style="width: 85%"></div>
-                            </div>
-                        </div>
+                    <div class="bg-blue-50 p-6 rounded-2xl border-2 border-blue-200 mb-8">
+                        <h3 class="text-xl font-bold text-blue-800 mb-2 flex items-center">
+                            <span class="text-2xl mr-2">💡</span> Pembahasan:
+                        </h3>
+                        <p id="q-explanation" class="text-lg text-gray-700 leading-relaxed"></p>
                     </div>
 
-                    <!-- Keterampilan Teknis & Tambahan (Tags) -->
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">Keterampilan Tambahan</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1.5 bg-emerald-50 text-eduPrimary text-sm rounded-md border border-emerald-200 font-medium"><i class="fas fa-desktop mr-1"></i> Ms. Office</span>
-                            <span class="px-3 py-1.5 bg-emerald-50 text-eduPrimary text-sm rounded-md border border-emerald-200 font-medium">Pembuatan Modul Ajar</span>
-                            <span class="px-3 py-1.5 bg-emerald-50 text-eduPrimary text-sm rounded-md border border-emerald-200 font-medium">Alat Peraga Kreatif</span>
-                            <span class="px-3 py-1.5 bg-emerald-50 text-eduPrimary text-sm rounded-md border border-emerald-200 font-medium">Komunikasi Interpersonal</span>
-                            <span class="px-3 py-1.5 bg-emerald-50 text-eduPrimary text-sm rounded-md border border-emerald-200 font-medium">Kepramukaan</span>
-                        </div>
+                    <!-- Actions -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="retryCurrentTopic()" class="btn-bouncy w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white text-xl font-bold py-4 px-8 rounded-full shadow-lg border-b-4 border-green-700">
+                            Coba Soal Lain 🎲
+                        </button>
+                        <button onclick="showTopics()" class="btn-bouncy w-full sm:w-auto bg-gray-200 hover:bg-gray-300 text-gray-700 text-xl font-bold py-4 px-8 rounded-full shadow-md border-b-4 border-gray-400">
+                            Pilih Materi Lain
+                        </button>
                     </div>
-                </section>
-
+                </div>
             </div>
-        </main>
-        
-        <!-- Footer / Penutup -->
-        <footer class="bg-slate-100 p-6 text-center border-t border-slate-200">
-            <p class="text-slate-500 text-sm">© 2026 Curriculum Vitae - Asnaeni, S.Pd. Dibuat dengan penuh dedikasi untuk pendidikan.</p>
-        </footer>
+        </div>
+
     </div>
 
+    <script>
+        // Data Materi
+        const topics = [
+            { id: 'uang', title: 'Penjumlahan & Pengurangan Uang', icon: '🛒', color: 'bg-green-400', hover: 'hover:bg-green-500', border: 'border-green-600' },
+            { id: 'pecahan', title: 'Pecahan Sederhana', icon: '🍕', color: 'bg-orange-400', hover: 'hover:bg-orange-500', border: 'border-orange-600' },
+            { id: 'jarakwaktu', title: 'Jarak & Waktu', icon: '🏃‍♂️', color: 'bg-blue-400', hover: 'hover:bg-blue-500', border: 'border-blue-600' },
+            { id: 'campuran', title: 'Operasi Campuran', icon: '🧮', color: 'bg-purple-400', hover: 'hover:bg-purple-500', border: 'border-purple-600' }
+        ];
+
+        // State variables
+        let currentTopic = null;
+        let currentQuestionData = null;
+        let isAnswering = false;
+
+        // Initialize App
+        window.onload = () => {
+            renderTopics();
+        };
+
+        function renderTopics() {
+            const container = document.getElementById('topics-container');
+            container.innerHTML = '';
+            
+            topics.forEach(topic => {
+                const btn = document.createElement('button');
+                btn.className = `btn-bouncy flex flex-col items-center justify-center p-8 rounded-[2rem] text-white shadow-xl border-b-8 ${topic.color} ${topic.hover} ${topic.border}`;
+                btn.onclick = () => selectTopic(topic);
+                
+                btn.innerHTML = `
+                    <span class="text-6xl mb-4 drop-shadow-md">${topic.icon}</span>
+                    <span class="text-2xl font-bold leading-tight drop-shadow-sm">${topic.title}</span>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        // Navigation Functions
+        function hideAllScreens() {
+            document.getElementById('screen-topics').classList.add('hidden');
+            document.getElementById('screen-loading').classList.add('hidden');
+            document.getElementById('screen-question').classList.add('hidden');
+            // Use flex to keep loading centered when visible
+            document.getElementById('screen-loading').classList.remove('flex'); 
+        }
+
+        function showTopics() {
+            hideAllScreens();
+            document.getElementById('screen-topics').classList.remove('hidden');
+        }
+
+        function showLoading() {
+            hideAllScreens();
+            const loadingScreen = document.getElementById('screen-loading');
+            loadingScreen.classList.remove('hidden');
+            loadingScreen.classList.add('flex');
+        }
+
+        function showQuestionScreen() {
+            hideAllScreens();
+            document.getElementById('screen-question').classList.remove('hidden');
+        }
+
+        async function selectTopic(topic) {
+            currentTopic = topic;
+            await fetchAndRenderQuestion();
+        }
+
+        async function retryCurrentTopic() {
+            await fetchAndRenderQuestion();
+        }
+
+        async function fetchAndRenderQuestion() {
+            showLoading();
+            
+            try {
+                const apiKey = ""; // API key is handled by the canvas environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                
+                const prompt = `Anda adalah guru matematika SD kelas 4. Buat 1 soal cerita tentang topik: "${currentTopic.title}".
+                TUJUAN UTAMA: Latih anak merumuskan soal cerita ke dalam bentuk kalimat matematika, BUKAN menghitung hasil akhir.
+                
+                Keluarkan respons HANYA dalam format JSON dengan struktur persis seperti ini:
+                {
+                  "soal_cerita": "Teks soal cerita yang menarik dan tidak terlalu panjang.",
+                  "pilihan_kalimat_matematika": [
+                    "A. [kalimat matematika 1]",
+                    "B. [kalimat matematika 2]",
+                    "C. [kalimat matematika 3]",
+                    "D. [kalimat matematika 4]"
+                  ],
+                  "jawaban_benar": "A", 
+                  "pembahasan": "Penjelasan ramah anak mengapa kalimat tersebut benar dan mengapa yang lain salah logika."
+                }
+                Catatan Penting: 
+                1. "jawaban_benar" HANYA berisi satu huruf: "A", "B", "C", atau "D".
+                2. Distraktor (pilihan salah) harus berupa kesalahan logika yang umum (misal: harusnya dikali malah ditambah).`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        // Ensure it tries to output JSON if possible
+                        responseMimeType: "application/json",
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                let textResult = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (!textResult) {
+                    throw new Error("Respons AI kosong.");
+                }
+
+                // Clean potential markdown formatting just in case
+                textResult = textResult.replace(/```json/gi, '').replace(/```/g, '').trim();
+                
+                const parsedData = JSON.parse(textResult);
+                
+                // Validation
+                if (!parsedData.soal_cerita || !parsedData.pilihan_kalimat_matematika || !parsedData.jawaban_benar) {
+                    throw new Error("Format JSON tidak lengkap.");
+                }
+
+                currentQuestionData = parsedData;
+                renderQuestionUI();
+
+            } catch (error) {
+                console.error("Gagal mengambil soal:", error);
+                alert("Maaf, terjadi kesalahan saat menyiapkan soal. Mari coba lagi!");
+                showTopics();
+            }
+        }
+
+        function renderQuestionUI() {
+            isAnswering = true;
+            
+            // Reset UI States
+            document.getElementById('q-result-area').classList.add('hidden');
+            
+            // Set Data
+            document.getElementById('q-topic-badge').innerText = `Misi: ${currentTopic.title}`;
+            document.getElementById('q-text').innerText = currentQuestionData.soal_cerita;
+            
+            const optionsContainer = document.getElementById('q-options');
+            optionsContainer.innerHTML = '';
+
+            // Generate Option Buttons
+            currentQuestionData.pilihan_kalimat_matematika.forEach(optionText => {
+                // Extract letter (A, B, C, D) for value checking
+                const optionLetter = optionText.substring(0, 1); 
+                
+                const btn = document.createElement('button');
+                // Base styles for options
+                btn.className = `option-btn btn-bouncy w-full text-left p-5 text-xl font-bold rounded-2xl border-4 border-gray-200 bg-white text-gray-700 shadow-sm hover:border-blue-400 hover:bg-blue-50 focus:outline-none transition-colors duration-200`;
+                btn.innerText = optionText;
+                btn.onclick = () => handleAnswerSelect(btn, optionLetter);
+                
+                optionsContainer.appendChild(btn);
+            });
+
+            showQuestionScreen();
+        }
+
+        function handleAnswerSelect(clickedButton, selectedLetter) {
+            if (!isAnswering) return; // Prevent multiple clicks
+            isAnswering = false;
+
+            const correctLetter = currentQuestionData.jawaban_benar.trim().toUpperCase();
+            const isCorrect = (selectedLetter === correctLetter);
+            
+            const allOptionButtons = document.querySelectorAll('.option-btn');
+            
+            // Disable all buttons and style them based on correctness
+            allOptionButtons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.remove('hover:border-blue-400', 'hover:bg-blue-50', 'btn-bouncy');
+                
+                const btnLetter = btn.innerText.substring(0, 1);
+                
+                if (btnLetter === correctLetter) {
+                    // Always highlight the correct answer in green
+                    btn.classList.replace('border-gray-200', 'border-green-500');
+                    btn.classList.replace('bg-white', 'bg-green-100');
+                    btn.classList.replace('text-gray-700', 'text-green-800');
+                    // Add a checkmark
+                    btn.innerHTML = `<span class="float-right text-green-600">✔️</span>` + btn.innerHTML;
+                } else if (btn === clickedButton && !isCorrect) {
+                    // Highlight the wrong answer chosen in red
+                    btn.classList.replace('border-gray-200', 'border-red-500');
+                    btn.classList.replace('bg-white', 'bg-red-100');
+                    btn.classList.replace('text-gray-700', 'text-red-800');
+                    btn.classList.add('shake-animation');
+                    // Add a cross
+                    btn.innerHTML = `<span class="float-right text-red-600">❌</span>` + btn.innerHTML;
+                } else {
+                    // Dim the other incorrect options
+                    btn.classList.add('opacity-50');
+                }
+            });
+
+            // Show Result Area
+            const resultMessage = document.getElementById('q-result-message');
+            if (isCorrect) {
+                resultMessage.innerText = "🌟 Yey! Pilihanmu Tepat Sekali!";
+                resultMessage.className = "text-2xl font-bold text-center mb-6 rounded-xl py-4 bg-green-500 text-white shadow-md";
+            } else {
+                resultMessage.innerText = "Oops! Hampir benar. Mari kita lihat penjelasannya.";
+                resultMessage.className = "text-2xl font-bold text-center mb-6 rounded-xl py-4 bg-orange-500 text-white shadow-md";
+            }
+
+            document.getElementById('q-explanation').innerText = currentQuestionData.pembahasan;
+            document.getElementById('q-result-area').classList.remove('hidden');
+            
+            // Scroll to explanation
+            setTimeout(() => {
+                document.getElementById('q-result-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+    </script>
 </body>
 </html>
