@@ -370,6 +370,14 @@ PENTING:
                         !q.pembahasan) {
                         throw new Error(`Format soal ke-${i + 1} tidak lengkap.`);
                     }
+
+                    q.pilihan_kalimat_matematika = q.pilihan_kalimat_matematika.map(cleanMathOption);
+
+                    if (q.pilihan_kalimat_matematika.some(opt =>
+                        !opt || /Math input error/i.test(opt)
+                    )) {
+                        throw new Error(`Pilihan soal ke-${i + 1} tidak valid. AI mengembalikan placeholder.`);
+                    }
                 });
 
                 questionBatch = parsedData.soal;
@@ -399,21 +407,38 @@ PENTING:
         }
 
         function formatOptionLatex(optionText) {
-            let text = escapeHtml(optionText).trim();
+            let text = escapeHtml(String(optionText || '').trim());
 
-            // Pilihan selalu berbentuk A./B./C./D. + ekspresi.
             const match = text.match(/^([A-D])\.\s*(.*)$/s);
             if (!match) return text;
 
             const letter = match[1];
             let body = match[2].trim();
 
-            // Jika AI belum memberi delimiter LaTeX, bungkus ekspresinya.
-            if (!body.includes('\\(') && !body.includes('\\[') && !body.includes('$')) {
+            // AI boleh mengirim LaTeX dengan $...$, \( ... \), atau tanpa delimiter.
+            // Jika tanpa delimiter, bungkus seluruh ekspresi agar MathJax merendernya.
+            const hasMathDelimiter =
+                body.includes('\\(') ||
+                body.includes('\\[') ||
+                body.includes('$');
+
+            if (!hasMathDelimiter) {
                 body = `\\(${body}\\)`;
             }
 
-            return `<span class="inline-block w-8">${letter}.</span> ${body}`;
+            return `<span class="inline-block w-8">${letter}.</span> <span class="math-option">${body}</span>`;
+        }
+
+        function cleanMathOption(text) {
+            let value = String(text || '').trim();
+
+            // Hilangkan placeholder yang kadang muncul dari keluaran model.
+            value = value.replace(/Math input error/gi, '');
+
+            // Jika AI menghasilkan label ganda seperti "A.A.", normalkan.
+            value = value.replace(/^([A-D])\.\s*([A-D])\.\s*/, '$1. ');
+
+            return value.trim();
         }
 
         function formatStoryText(text) {
@@ -456,7 +481,8 @@ PENTING:
             const optionsContainer = document.getElementById('q-options');
             optionsContainer.innerHTML = '';
 
-            currentQuestionData.pilihan_kalimat_matematika.forEach(optionText => {
+            currentQuestionData.pilihan_kalimat_matematika.forEach(rawOptionText => {
+                const optionText = cleanMathOption(rawOptionText);
                 const optionLetter = String(optionText).trim().substring(0, 1).toUpperCase();
                 const btn = document.createElement('button');
 
